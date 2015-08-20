@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="CelinkSoftSystem"
+  id="myeclipse.1439884483968"
+  context-root="/CelinkSoftSystem"
+  j2ee-spec="5.0"
+  archive="CelinkSoftSystem.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
