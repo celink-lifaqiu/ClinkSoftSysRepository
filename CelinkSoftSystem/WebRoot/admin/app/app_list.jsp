@@ -86,23 +86,26 @@ $(function(){
 				iconCls : "icon-remove",
 				handler : function() {
 					var rows = $('#dg').datagrid('getSelected');
-					var id = rows["id"];
+					
 					if (rows != null) {
-						$.ajax({
-								type : "POST",
-								url : "deleteVersion.do",
-								data : "id=" + id,
-								dataType : 'text',
-								success : function(msg) {
-									if (msg) {
-										$('#dg').datagrid('reload');
-										$("#tt").tree("reload");
-										alert("删除成功");
-									} else {
-										alert("删除失败");
-									}								
-								}
-							});
+						var id = rows["id"];
+						if (window.confirm("确认删除?")) {
+							$.ajax({
+									type : "POST",
+									url : "deleteVersion.do",
+									data : "id=" + id,
+									dataType : 'text',
+									success : function(msg) {
+										if (msg) {
+											$('#dg').datagrid('reload');
+											alert("删除成功");
+										} else {
+											alert("删除失败");
+										}								
+									}
+								});
+						}
+						
 					} else {
 						$.messager.alert('提示', '请选择要删除的版本', 'error');
 					}
@@ -189,26 +192,24 @@ $(function(){
 	src="${pageContext.request.contextPath}/admin/app/js/app_list.js"></script>
 </head>
 <body>
-
-	${result}
 	<table id="dg" title="版本管理" style="height:50px">
 		<div id="tb" style="padding:10px 10px;">
-			类型: <select class="easyui-combobox" panelHeight="auto"
+			类型: <select id="type_" class="easyui-combobox" panelHeight="auto"
 				style="width:100px">
+				<option value=""></option>
 				<option value="定制版">定制版</option>
 				<option value="正式版">正式版</option>
 			</select> &nbsp;&nbsp;&nbsp;&nbsp;
 			
-			时间 从: <input class="easyui-datetimebox" style="width:150px"> 
-			到:<input class="easyui-datetimebox" style="width:150px">
+			时间 从: <input id="startTime" class="easyui-datetimebox" style="width:150px"> 
+			到:<input id="endTime" class="easyui-datetimebox" style="width:150px">
 			<br><br> 
-			版本号：<input
-				type="text" style="width:180px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			版本号：<input id="versioncode_" type="text" style="width:180px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				
-			关键字：<input type="text"
-				style="width:180px"> <br> <a href="#"
-				class="easyui-linkbutton" iconCls="icon-search">查找</a> <a
-				type="reset" class="easyui-linkbutton" iconCls="icon-cancel">重置</a>
+			关键字：<input id="keyword_" type="text" style="width:180px"> <br> 
+				
+				<a href="#"class="easyui-linkbutton" iconCls="icon-search" onclick="search()">查找</a> 
+				<a type="reset" class="easyui-linkbutton" iconCls="icon-cancel" onclick="reset()">重置</a>
 		</div>
 	</table>
 
