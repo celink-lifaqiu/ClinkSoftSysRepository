@@ -186,6 +186,19 @@ $(function(){
 });
 
 
+
+function reset(){
+	$("#type_").combobox("setValue", "");
+	$('#startTime').datetimebox('setValue', '');	
+	$('#endTime').datetimebox('setValue', '');	
+
+	if ($('#versioncode_').val()) {
+		$('#versioncode_').val('');
+	}
+	if ($('#keyword_').val()) {
+		$('#keyword_').val('');
+	}
+}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript"
@@ -196,7 +209,7 @@ $(function(){
 		<div id="tb" style="padding:10px 10px;">
 			类型: <select id="type_" class="easyui-combobox" panelHeight="auto"
 				style="width:100px">
-				<option value=""></option>
+				<option value="">请选择</option>
 				<option value="定制版">定制版</option>
 				<option value="正式版">正式版</option>
 			</select> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -204,12 +217,12 @@ $(function(){
 			时间 从: <input id="startTime" class="easyui-datetimebox" style="width:150px"> 
 			到:<input id="endTime" class="easyui-datetimebox" style="width:150px">
 			<br><br> 
-			版本号：<input id="versioncode_" type="text" style="width:180px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-				
-			关键字：<input id="keyword_" type="text" style="width:180px"> <br> 
-				
-				<a href="#"class="easyui-linkbutton" iconCls="icon-search" onclick="search()">查找</a> 
-				<a type="reset" class="easyui-linkbutton" iconCls="icon-cancel" onclick="reset()">重置</a>
+			版本号：<input id="versioncode_" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:200px">
+			关键字： <input id="keyword_"  class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:200px"><br>
+			
+				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="search()">查找</a> 
+				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="reset()">重置</a>
+
 		</div>
 	</table>
 
@@ -227,9 +240,9 @@ $(function(){
 					</tr>
 					<tr>
 						<td>类型:</td>
-						<td><select class="easyui-combobox" name="type" style="width:100px">
-							<option value="定制版">定制版</option>
-							<option value="正式版">正式版</option>
+						<td><select class="easyui-combobox" name="type" style="width:200px">
+							<option value="0">定制版</option>
+							<option value="1">正式版</option>
 						</select></td>
 					</tr>
 
@@ -290,8 +303,8 @@ $(function(){
 						<td>类型:</td>
 						<td><select class="easyui-combobox" name="type"
 							style="width:200px">
-								<option value="定制版">定制版</option>
-								<option value="正式版">正式版</option>
+								<option value="0">定制版</option>
+								<option value="1">正式版</option>
 						</select></td>
 					</tr>
 

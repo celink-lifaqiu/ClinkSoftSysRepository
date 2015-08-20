@@ -258,7 +258,7 @@ public class AdminController {
 		String commitId = request.getParameter("commitId");
 		int res_code = Integer.parseInt(request.getSession()
 				.getAttribute("code").toString());
-		appInfo.put("type", 1);
+		appInfo.put("type", type);
 		appInfo.put("fileName", fileName);
 		appInfo.put("versionCode", versionCode);
 		appInfo.put("updateDesc", updateDesc);
