@@ -188,7 +188,7 @@ $(function(){
 
 
 function reset(){
-	$("#type_").combobox("setValue", "");
+	$('#type_').combobox('setValue', '');
 	$('#startTime').datetimebox('setValue', '');	
 	$('#endTime').datetimebox('setValue', '');	
 
@@ -199,6 +199,24 @@ function reset(){
 		$('#keyword_').val('');
 	}
 }
+
+function searchVersions(){
+	var type = $('#type_').combobox('getValue');	
+	var startTime = $('#startTime').datetimebox('getValue');	
+	var endTime = $('#endTime').datetimebox('getValue');	
+	var keyword_ = $('#keyword_').val();	
+	var versioncode_ = $('#versioncode_').val();		
+
+	$('#dg').datagrid('load', {
+			type : type,
+			startTime : startTime,
+			endTime : endTime,
+			keyword_ : keyword_,
+			versioncode_ : versioncode_
+		});
+
+
+}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript"
@@ -207,11 +225,12 @@ function reset(){
 <body>
 	<table id="dg" title="版本管理" style="height:50px">
 		<div id="tb" style="padding:10px 10px;">
+		
 			类型: <select id="type_" class="easyui-combobox" panelHeight="auto"
 				style="width:100px">
-				<option value="">请选择</option>
-				<option value="定制版">定制版</option>
-				<option value="正式版">正式版</option>
+				<option value="-1">请选择</option>
+				<option value="0">定制版</option>
+				<option value="1">正式版</option>
 			</select> &nbsp;&nbsp;&nbsp;&nbsp;
 			
 			时间 从: <input id="startTime" class="easyui-datetimebox" style="width:150px"> 
@@ -220,7 +239,7 @@ function reset(){
 			版本号：<input id="versioncode_" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:200px">
 			关键字： <input id="keyword_"  class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:200px"><br>
 			
-				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="search()">查找</a> 
+				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" onclick="searchVersions()">查找</a> 
 				<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-cancel" onclick="reset()">重置</a>
 
 		</div>

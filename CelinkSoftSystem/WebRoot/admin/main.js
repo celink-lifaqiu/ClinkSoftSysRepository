@@ -13,7 +13,17 @@ $(function() {
 				//alert(node.text);
 			} else {
 				var pnode=$('#tt').tree('getParent',node.target);
+				$.ajax({
+					type : "POST",
+					url : "resetResCode.do",
+					data : "res_code=" + node.code,
+					dataType : 'text',
+					success : function(msg) {
+														
+					}
+				});
 				addTab1(pnode ? pnode.text + "-" + node.text : node.text, node.attributes.url, node.code);
+				
 			}
 		},
 		onAfterEdit : function(node) {

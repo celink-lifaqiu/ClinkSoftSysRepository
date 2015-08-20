@@ -179,6 +179,18 @@ public class AdminController {
 			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		try{
+			System.out.println(request.getParameter("type"));
+			System.out.println(request.getParameter("startTime"));
+			System.out.println(request.getParameter("endTime"));
+			System.out.println(request.getParameter("keyword_"));
+			System.out.println(request.getParameter("versioncode_"));
+			System.out.println(request.getSession().getAttribute("code").toString());
+			
+			
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("email", request.getParameter("email"));
+			map.put("phone", request.getParameter("phone"));
 			ResultDto resultDto=adminService.getVersions(dto, Integer.parseInt(request.getSession().getAttribute("code").toString()));
 			response.getWriter().write(JsonUtil.getJson(resultDto));
 		}catch (Exception e) {
@@ -235,6 +247,20 @@ public class AdminController {
 		
 		try {
 			response.getWriter().write(msg);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/resetResCode")
+	public void resetResCode(HttpServletRequest request,
+			HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
+		request.getSession().removeAttribute("code");
+		request.getSession().setAttribute("code", request.getParameter("res_code").toString());		
+		try {
+			response.getWriter().write("suc");
 		} catch (IOException e) {
 			
 			e.printStackTrace();
