@@ -254,7 +254,14 @@ public class AdminController {
 			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		request.getSession().removeAttribute("code");
-		request.getSession().setAttribute("code", request.getParameter("res_code").toString());		
+		
+		if(("".equals(request.getParameter("res_code")) || request.getParameter("res_code") == null)){
+			String title = request.getParameter("title");
+			int code = this.adminService.findCodeByTitle(title);
+			request.getSession().setAttribute("code", code);	
+		}else{
+			request.getSession().setAttribute("code", request.getParameter("res_code").toString());	
+		}
 		try {
 			System.out.println("当前选择的是："+request.getSession().getAttribute("code"));
 			response.getWriter().write("suc");

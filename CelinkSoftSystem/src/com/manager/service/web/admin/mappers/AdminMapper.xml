@@ -12,6 +12,12 @@
    <select id="getResourceName" parameterType="Integer" resultType="String">
        SELECT res_name from resource WHERE res_code=#{_parameter}
    </select>
+
+   <select id="findRescodeByPnameAndRname" parameterType="Map" resultType="int">
+      SELECT r.res_code from resource r 
+      WHERE r.parent_code=(SELECT p.res_code from resource p WHERE p.res_name=#{p_name}) 
+      AND r.res_name=#{r_name}
+   </select>
    
    <delete id="deleteVersions" parameterType="int">
    	DELETE from softversion_tb WHERE res_code=#{_parameter}

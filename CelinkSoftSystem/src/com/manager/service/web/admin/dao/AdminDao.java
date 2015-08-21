@@ -30,4 +30,5 @@ public interface AdminDao {
 	int uploadVersion(Map<String, Object> params);
 	int updateVersion(Map<String, Object> params);
 	int deleteVersion(int id);
+	int findRescodeByPnameAndRname(Map<String, Object> params);
 }

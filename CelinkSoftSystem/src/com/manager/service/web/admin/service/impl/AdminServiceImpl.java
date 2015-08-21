@@ -150,13 +150,18 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateVersion(params);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.manager.service.web.admin.service.AdminService#deleteVersion(int)
-	 */
 	@Override
 	public int deleteVersion(int id) {
-		// TODO Auto-generated method stub
 		return adminDao.deleteVersion(id);
+	}
+
+	@Override
+	public int findCodeByTitle(String title) {
+		String[] str = title.split("-");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("p_name", str[0]);
+		params.put("r_name", str[1]);
+		return this.adminDao.findRescodeByPnameAndRname(params);
 	}
 	
 }

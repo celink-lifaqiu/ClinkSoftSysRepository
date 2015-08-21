@@ -43,5 +43,7 @@ public interface AdminService {
 	public int uploadVersion(Map<String, Object> params);
 	public int updateVersion(Map<String, Object> params);
 	public int deleteVersion(int id);
+
+	int findCodeByTitle(String title);
 	
 }

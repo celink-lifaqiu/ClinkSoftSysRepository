@@ -75,6 +75,21 @@ $(function() {
         	}
         }
     });
+    
+    $('#tab').tabs({
+        border:false,
+        onSelect:function(title){
+        	$.ajax({
+				type : "POST",
+				url : "resetResCode.do",
+				data : "title=" + title,
+				dataType : 'text',
+				success : function(msg) {
+													
+				}
+			});
+        }
+    });
 });
 
 
