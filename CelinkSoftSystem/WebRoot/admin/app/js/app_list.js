@@ -129,7 +129,7 @@ $(function(){
 		}
  }
 
- download = function(){
+ downloadVersion = function(){
 	 alert('a');
 	 var rows = $('#dg').datagrid('getSelected');
 		if (rows != null) {

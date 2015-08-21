@@ -177,7 +177,7 @@
  		<% 
  	}	    
    %>
-            <a href="javascript:void(0)" id="btn-edit" class="easyui-linkbutton" iconCls="icon-upload" onclick="download()" plain="true">下载版本</a>
+            <a href="javascript:void(0)" id="btn-edit" class="easyui-linkbutton" iconCls="icon-upload" onclick="downloadVersion()" plain="true">下载版本</a>
         </div>
 		
 		
