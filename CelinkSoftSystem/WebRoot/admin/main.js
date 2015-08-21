@@ -1,6 +1,7 @@
 $(function() {
 	$('#tt').tree({
 		url:'getmenu.do',
+		animate:true,
 		onContextMenu: function (e, title) {
             e.preventDefault();
             $("#tmenu").menu('show', {

@@ -89,11 +89,12 @@ $(function(){
 					
 					if (rows != null) {
 						var id = rows["id"];
+						var fileName=rows["fileName"];
 						if (window.confirm("确认删除?")) {
 							$.ajax({
 									type : "POST",
 									url : "deleteVersion.do",
-									data : "id=" + id,
+									data : "id=" + id+'&'+"fileName="+fileName,
 									dataType : 'text',
 									success : function(msg) {
 										if (msg) {
@@ -116,7 +117,18 @@ $(function(){
 				handler : function() {
 					var rows = $('#dg').datagrid('getSelected');
 					if (rows != null) {
-						alert('还没完成');
+					var id = rows["id"];
+					var fileName=rows["fileName"];
+						$.ajax({
+								type : "POST",
+								url : "downloadVersion.do",
+								data : "fileName="+fileName,
+								dataType : 'text',
+								success : function(url) {
+									alert(url);
+									window.location.href=url;						
+									}
+								});
 					} else {
 						$.messager.alert('提示', '请选择下载的版本', 'error');
 					}
@@ -252,7 +264,8 @@ function searchVersions(){
 				<table>
 					<tr>
 						<td>文件名称:</td>
-						<td><input type="hidden" id="id" type="text" name="id" /> <input
+						<td><input type="hidden" id="id" type="text" name="id" /> 
+						<input
 							id="fileName" name="fileName" class="easyui-validatebox"
 							type="text" required="true" style="width: 200px" />
 						</td>
@@ -265,7 +278,6 @@ function searchVersions(){
 						</select></td>
 					</tr>
 
-
 					<tr>
 						<td>版本号:</td>
 						<td><input class="easyui-validatebox" id="version"
@@ -275,15 +287,18 @@ function searchVersions(){
 					</tr>
 					<tr>
 						<td>备注说明:</td>
-						<td><input class="easyui-validatebox" id="updateDesc"
-							class="text" name="updateDesc" style="width: 200px" />
+						<td>
+						<textarea id="updateDesc" name="updateDesc" 
+						style="width:200px;height:80px;">
+						</textarea>
+						
 						</td>
 					</tr>
 					<tr>
 						<td>CommitID:</td>
 						<td><input class="easyui-validatebox" id="CommitID"
 							class="text" name="CommitID" style="width: 200px"
-							data-options="required:true" />
+							 />
 						</td>
 					</tr>
 					<tr>
@@ -337,8 +352,11 @@ function searchVersions(){
 					</tr>
 					<tr>
 						<td>备注说明:</td>
-						<td><input class="easyui-validatebox" id="updateDesc_upload"
-							class="areatext" name="updateDesc" style="width: 200px" />
+						<td>
+						<textarea id="updateDesc_upload" name="updateDesc" 
+						style="width:200px;height:80px;">
+						</textarea>
+						
 						</td>
 					</tr>
 					<tr>

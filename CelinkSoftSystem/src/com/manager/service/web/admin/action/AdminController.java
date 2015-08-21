@@ -39,6 +39,7 @@ import com.wifiswitch.service.utils.JsonUtil;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	String download_url="http://192.168.4.160:8080/CelinkSoftSystem/admin/appFile/";
 	private final static Logger logger = Logger.getLogger(AdminController.class);
 	@Autowired
 	private AdminService adminService;	
@@ -307,32 +308,32 @@ public class AdminController {
 			@RequestParam(value = "installFile", required = false) MultipartFile filedata,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IllegalStateException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		System.out.println("((((((((" + 12);
-		Map<String, Object> appInfo = new HashMap<String, Object>();
-		String type = request.getParameter("type");
-
-		String fileName = request.getParameter("fileName");
-		String versionCode = request.getParameter("versionCode");
-		String updateDesc = request.getParameter("updateDesc");
-		String commitId = request.getParameter("commitId");
-		int res_code = Integer.parseInt(request.getSession()
-				.getAttribute("code").toString());
-		appInfo.put("type", type);
-		appInfo.put("fileName", fileName);
-		appInfo.put("versionCode", versionCode);
-		appInfo.put("updateDesc", updateDesc);
-		appInfo.put("commitId", commitId);
-		appInfo.put("res_code", res_code);
-		String path = request.getSession().getServletContext().getRealPath("")
-				+ "\\" + "appFile";
-
-		System.out.println(path);
-		// path+=app.getFileSaveURL().substring(0,app.getFileSaveURL().lastIndexOf("/"));
-		// String fileName =str[str.length-1];
-		if (filedata != null && !filedata.isEmpty()) {
+		int result=0;		
+		response.setCharacterEncoding("UTF-8");								
+		if (filedata != null && !filedata.isEmpty()) {//没有文件不让上传
+			Map<String, Object> appInfo = new HashMap<String, Object>();
+			String type = request.getParameter("type");
+			String fileName = request.getParameter("fileName");
+			String versionCode = request.getParameter("versionCode");
+			String updateDesc = request.getParameter("updateDesc").toString();
+			String commitId = request.getParameter("commitId");
+			int res_code = Integer.parseInt(request.getSession()
+					.getAttribute("code").toString());
+			appInfo.put("type", type);
+			appInfo.put("fileName", fileName);
+			appInfo.put("versionCode", versionCode);
+			appInfo.put("updateDesc", updateDesc);
+			appInfo.put("commitId", commitId);
+			appInfo.put("res_code", res_code);
+			
+			String path = request.getSession().getServletContext().getRealPath("")
+					+ File.separator +"admin"+File.separator+ "appFile";
+			File file=new File(path);			
+	        if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
+	        	file.mkdirs();
+	        }
 			File targetFile = new File(path, fileName);
-			String saveDir = path + "\\" + fileName;
+			String saveDir = "appFile";
 			int size = Integer.parseInt((filedata.getSize() / 1024) + 1 + "");
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String createDate = df.format(new Date());
@@ -340,8 +341,9 @@ public class AdminController {
 			appInfo.put("size", size);
 			appInfo.put("saveDir", saveDir);
 			filedata.transferTo(targetFile);
+			result = adminService.uploadVersion(appInfo);
 		}
-		int result = adminService.uploadVersion(appInfo);
+		 
 		try {
 			if (result > 0) {
 				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
@@ -362,9 +364,6 @@ public class AdminController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IllegalStateException, IOException {
 		response.setCharacterEncoding("UTF-8");
-		System.out.println("((((((((" + 12);
-		int reply = 1;
-
 		Map<String, Object> appInfo = new HashMap<String, Object>();
 		String type = request.getParameter("type");
 
@@ -375,7 +374,7 @@ public class AdminController {
 		int id = Integer.parseInt(request.getParameter("id"));
 		int res_code = Integer.parseInt(request.getSession()
 				.getAttribute("code").toString());
-		appInfo.put("type", 1);
+		appInfo.put("type", type);
 		appInfo.put("fileName", fileName);
 		appInfo.put("versionCode", versionCode);
 		appInfo.put("updateDesc", updateDesc);
@@ -384,14 +383,10 @@ public class AdminController {
 		appInfo.put("id", id);
 
 		String path = request.getSession().getServletContext().getRealPath("")
-				+ "\\" + "appFile";
-
-		System.out.println(path);
-		// path+=app.getFileSaveURL().substring(0,app.getFileSaveURL().lastIndexOf("/"));
-		// String fileName =str[str.length-1];
+				+ File.separator + "appFile";
 		if (filedata != null && !filedata.isEmpty()) {
 			File targetFile = new File(path, fileName);
-			String saveDir = path + "\\" + fileName;
+			String saveDir = "appFile";
 			int size = Integer.parseInt((filedata.getSize() / 1024) + 1 + "");
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String createDate = df.format(new Date());
@@ -420,13 +415,17 @@ public class AdminController {
 	public void deleteVersion(HttpServletRequest request,
 			HttpServletResponse response) throws IllegalStateException,
 			IOException {
-		response.setCharacterEncoding("UTF-8");
-		System.out.println("((((((((" + 12);
+		response.setCharacterEncoding("UTF-8");		
 		int id = Integer.parseInt(request.getParameter("id"));
 		int result = adminService.deleteVersion(id);
 
 		try {
 			if (result > 0) {
+				String root = request.getSession().getServletContext().getRealPath("")
+						+ File.separator +"admin"+File.separator+ "appFile" +File.separator+ request.getParameter("fileName").toString();
+				System.out.println(root);
+				File file = new File(root);
+				file.delete();
 				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
 			} else {
 				response.getWriter().write(JsonUtil.getJson(Boolean.FALSE));
@@ -435,6 +434,15 @@ public class AdminController {
 			e.printStackTrace();
 			logger.error("获取信息出错：" + e.getLocalizedMessage());
 		}
+	}
+	@RequestMapping("/app/downloadVersion")
+	public void downloadVersion(HttpServletRequest request,
+			HttpServletResponse response) throws IllegalStateException,
+			IOException {
+		response.setContentType("application/octet-stream");  
+		String fileName=request.getParameter("fileName");
+		String downpath = download_url+fileName;
+		response.getWriter().write(JsonUtil.getJson(downpath));	
 	}
 	
 }
