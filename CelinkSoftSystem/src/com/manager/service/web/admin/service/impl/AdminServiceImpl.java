@@ -163,5 +163,35 @@ public class AdminServiceImpl implements AdminService {
 		params.put("r_name", str[1]);
 		return this.adminDao.findRescodeByPnameAndRname(params);
 	}
+
+	@Override
+	public void addProject() {
+		Resource resource = new Resource();
+		resource.setResRank(1);
+		resource.setResStatus(0);
+		this.adminDao.addResourceAndGetResCode(resource);
+		int res_code = resource.getResCode();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("res_code", res_code);
+		params.put("res_name", res_code + "-请重命名");
+		this.adminDao.updateResourceName(params);
+		
+	}
+
+	@Override
+	public void addProjectProduct(String pcode) {
+		Resource resource = new Resource();
+		resource.setResRank(2);
+		resource.setParentCode(Integer.parseInt(pcode));
+		resource.setResStatus(0);
+		this.adminDao.addResourceAndGetResCode(resource);
+		int res_code = resource.getResCode();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("res_code", res_code);
+		params.put("res_name", res_code + "-请重命名");
+		this.adminDao.updateResourceName(params);
+	}
+	
+	
 	
 }

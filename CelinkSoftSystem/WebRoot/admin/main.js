@@ -60,13 +60,10 @@ $(function() {
         	}else if(item.name === "closeAll"){
         		closeAll(this);
         	}else if(item.name === "addProject"){
-        		// 检查是否有权限
+        		addProject();
         		
-        		
-        		
-        		$.messager.alert('提示', '请双击重命名', 'info');
         	}else if(item.name === "addProjectProduct"){
-        		$.messager.alert('提示', '请双击重命名', 'info');
+        		addProjectProduct();
         	}else if(item.name === "deleteProject"){
         		deleteNode();
         	}else if(item.name === "resetName"){
@@ -91,6 +88,41 @@ $(function() {
         }
     });
 });
+ 
+function addProject(){
+	$.ajax({
+		type : "POST",
+		url : "addProject.do",
+		dataType : 'text',
+		success : function(msg) {
+			$("#tt").tree("reload");
+			$.messager.alert('提示', '请重命名', 'info');						
+		}
+	});
+	
+}
+
+function addProjectProduct(){
+	
+	var node = $('#tt').tree('getSelected');  
+	var pnode=$('#tt').tree('getParent',node.target);
+	if(pnode){
+		
+	}else{
+		$.ajax({
+			type : "POST",
+			url : "addProjectProduct.do",
+			data : "pcode=" + node.code,
+			dataType : 'text',
+			success : function(msg) {
+				$("#tt").tree("reload");
+				$.messager.alert('提示', '请重命名', 'info');						
+			}
+		});
+		
+	}
+	
+}
 
 
 function resetName(node){

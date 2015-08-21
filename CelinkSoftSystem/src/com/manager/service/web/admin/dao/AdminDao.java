@@ -3,6 +3,7 @@ package com.manager.service.web.admin.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.manager.service.web.admin.dto.Resource;
 import com.manager.service.web.admin.dto.Version;
 
 public interface AdminDao {
@@ -31,4 +32,5 @@ public interface AdminDao {
 	int updateVersion(Map<String, Object> params);
 	int deleteVersion(int id);
 	int findRescodeByPnameAndRname(Map<String, Object> params);
+	int addResourceAndGetResCode(Resource resource);
 }

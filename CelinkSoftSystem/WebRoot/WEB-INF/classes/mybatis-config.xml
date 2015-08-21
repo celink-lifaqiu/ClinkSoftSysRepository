@@ -4,6 +4,7 @@
 	<typeAliases>
 		<!-- 用户 -->
 		<typeAlias alias="version" type="com.manager.service.web.admin.dto.Version" />
+		<typeAlias alias="resource" type="com.manager.service.web.admin.dto.Resource" />
 	</typeAliases>
 </configuration>		
 			

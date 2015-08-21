@@ -4,6 +4,10 @@
    <select id="getAdmin" parameterType="Map" resultType="Map" >
        select role_code,real_name,user_email,user_phone from user where user_name =#{name} and user_pwd =#{pwd} and user_status =1
    </select>
+   
+	<insert id="addResourceAndGetResCode" useGeneratedKeys="true" keyProperty="resCode" parameterType="resource">  
+	    INSERT INTO resource(res_name,res_status,parent_code,res_rank) VALUE(#{resName},#{resStatus},#{parentCode},#{resRank})
+	</insert> 
 
    <select id="getResource" parameterType="Integer" resultType="Map">
        select * from resource

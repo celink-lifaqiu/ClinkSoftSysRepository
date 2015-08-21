@@ -271,6 +271,36 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping("/addProject")
+	public void addProject(HttpServletRequest request,
+			HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
+		
+		this.adminService.addProject();
+		
+		try {
+			response.getWriter().write("suc");
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/addProjectProduct")
+	public void addProjectProduct(HttpServletRequest request,
+			HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
+		String pcode = request.getParameter("pcode");
+		this.adminService.addProjectProduct(pcode);
+		
+		try {
+			response.getWriter().write("suc");
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
 
 	@RequestMapping("/app/uploadApp")
 	public void uploadApp(

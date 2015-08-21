@@ -45,5 +45,9 @@ public interface AdminService {
 	public int deleteVersion(int id);
 
 	int findCodeByTitle(String title);
+
+	void addProject();
+
+	void addProjectProduct(String pcode);
 	
 }
