@@ -69,6 +69,10 @@ $(function() {
         	}else if(item.name === "resetName"){
         		var node = $('#tt').tree('getSelected');
         		$('#tt').tree('beginEdit', node.target);
+        	}else if(item.name === "expandAll"){
+        		$('#tt').tree('expandAll');
+        	}else if(item.name === "collapseAll"){
+        		$('#tt').tree('collapseAll');
         	}
         }
     });
@@ -96,7 +100,9 @@ function addProject(){
 		dataType : 'text',
 		success : function(msg) {
 			$("#tt").tree("reload");
-			$.messager.alert('提示', '请重命名', 'info');						
+			
+			$.messager.alert('提示', '请重命名', 'info');		
+			$('#tt').tree('collapseAll');
 		}
 	});
 	
@@ -116,7 +122,9 @@ function addProjectProduct(){
 			dataType : 'text',
 			success : function(msg) {
 				$("#tt").tree("reload");
-				$.messager.alert('提示', '请重命名', 'info');						
+				
+				$.messager.alert('提示', '请重命名', 'info');	
+				$('#tt').tree('collapseAll');
 			}
 		});
 		

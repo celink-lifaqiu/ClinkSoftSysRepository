@@ -46,6 +46,8 @@
 						</ul> 
 					</div>	
 					<div id="tmenu" class="easyui-menu" style="width:150px;">  
+					    <div name="expandAll">展开所有项目</div>  
+					    <div name="collapseAll">收缩所有项目</div>   
 					    <div name="closeSefl">关闭</div>  
 					    <div name="closeOther">关闭其他</div>  
 					    <div name="closeAll">关闭所有</div>
