@@ -202,7 +202,6 @@ $(function(){
 								data : "fileName="+fileName,
 								dataType : 'text',
 								success : function(url) {
-									alert(url);
 									window.location.href=url;						
 									}
 								});

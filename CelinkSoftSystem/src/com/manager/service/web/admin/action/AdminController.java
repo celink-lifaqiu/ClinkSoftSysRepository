@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +41,6 @@ import com.wifiswitch.service.utils.JsonUtil;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	String download_url="http://192.168.4.183:8080/CelinkSoftSystem/admin/appFile/";
 	private final static Logger logger = Logger.getLogger(AdminController.class);
 	@Autowired
 	private AdminService adminService;	
@@ -441,8 +442,22 @@ public class AdminController {
 			IOException {
 		response.setContentType("application/octet-stream");  
 		String fileName=request.getParameter("fileName");
-		String downpath = download_url+fileName;
+		String downpath = getPropertyByName("config.properties", "download.url")+fileName;
 		response.getWriter().write(downpath);	
 	}
+	
+	// 方法一：通过java.util.ResourceBundle读取资源属性文件  
+    public String getPropertyByName(String path, String name) {  
+        String result = "";  
+        
+        try {  
+        	Properties props=PropertiesLoaderUtils.loadAllProperties("config.properties");
+            // 方法一：通过java.util.ResourceBundle读取资源属性文件  
+            result = props.getProperty(name);
+        } catch (Exception e) {  
+
+        }  
+        return result;  
+    }  
 	
 }
