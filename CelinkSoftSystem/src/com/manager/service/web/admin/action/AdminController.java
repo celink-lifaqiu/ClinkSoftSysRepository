@@ -179,19 +179,15 @@ public class AdminController {
 			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		try{
-			System.out.println(request.getParameter("type"));
-			System.out.println(request.getParameter("startTime"));
-			System.out.println(request.getParameter("endTime"));
-			System.out.println(request.getParameter("keyword_"));
-			System.out.println(request.getParameter("versioncode_"));
-			System.out.println(request.getSession().getAttribute("code").toString());
-			
-			
-			
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("email", request.getParameter("email"));
-			map.put("phone", request.getParameter("phone"));
-			ResultDto resultDto=adminService.getVersions(dto, Integer.parseInt(request.getSession().getAttribute("code").toString()));
+			map.put("type", request.getParameter("type_"));
+			map.put("startTime", request.getParameter("startTime"));
+			map.put("endTime", request.getParameter("endTime"));
+			map.put("keyword_", ("".equals(request.getParameter("keyword_")) || request.getParameter("keyword_")==null) ? "" : "%"+request.getParameter("keyword_")+"%");
+			map.put("versioncode_", ("".equals(request.getParameter("versioncode_")) || request.getParameter("versioncode_")==null) ? "" : "%"+request.getParameter("versioncode_")+"%");
+			map.put("res_code", request.getSession().getAttribute("code").toString());
+			
+			ResultDto resultDto=adminService.getVersions(dto, map);
 			response.getWriter().write(JsonUtil.getJson(resultDto));
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -260,6 +256,7 @@ public class AdminController {
 		request.getSession().removeAttribute("code");
 		request.getSession().setAttribute("code", request.getParameter("res_code").toString());		
 		try {
+			System.out.println("当前选择的是："+request.getSession().getAttribute("code"));
 			response.getWriter().write("suc");
 		} catch (IOException e) {
 			

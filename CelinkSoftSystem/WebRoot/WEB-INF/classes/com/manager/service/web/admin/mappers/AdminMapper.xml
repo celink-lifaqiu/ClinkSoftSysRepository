@@ -28,12 +28,53 @@
    
    <select id="getVersions" parameterType="Map" resultType="version">
 	    select * from softversion_tb
-	    where res_code=#{code} 
+	    <where>
+				<if test="res_code != null and res_code !=''">
+					and res_code = #{res_code}
+				</if>
+				<if test="type != null and type !=''">
+					and type = #{type}
+				</if>
+				<if test="startTime != null and startTime !=''">
+					and createDate <![CDATA[>]]> #{startTime}
+				</if>
+				<if test="endTime != null and endTime !=''">
+					and createDate <![CDATA[<]]> #{endTime}
+				</if>
+				<if test="versioncode_ != null and versioncode_ !=''">
+					and versionCode like #{versioncode_}
+				</if>
+				<if test="keyword_ != null and keyword_ !=''">
+					and (versionCode like #{keyword_} or fileName like #{keyword_} 
+					or updateDesc like #{keyword_} or createDate like #{keyword_} or commitId like #{keyword_})
+				</if>
+		</where>
 	    order by createDate desc 
 	   	limit #{startNum},#{pageSize}
 	</select>
-	<select id="getVersionCount" parameterType="int" resultType="Integer">
-	  select count(id) from softversion_tb where res_code=#{code} 
+	<select id="getVersionCount" parameterType="Map" resultType="Integer">
+	  select count(id) from softversion_tb
+		<where>
+				<if test="res_code != null and res_code !=''">
+					and res_code = #{res_code}
+				</if>
+				<if test="type != null and type !=''">
+					and type = #{type}
+				</if>
+				<if test="startTime != null and startTime !=''">
+					and createDate <![CDATA[>]]> #{startTime}
+				</if>
+				<if test="endTime != null and endTime !=''">
+					and createDate <![CDATA[<]]> #{endTime}
+				</if>
+				<if test="versioncode_ != null and versioncode_ !=''">
+					and versionCode like #{versioncode_}
+				</if>
+				<if test="keyword_ != null and keyword_ !=''">
+					and (versionCode like #{keyword_} or fileName like #{keyword_} 
+					or updateDesc like #{keyword_} or createDate like #{keyword_} or commitId like #{keyword_})
+				</if>
+		</where>
 	</select>
    
    <!-- 上传版本 -->

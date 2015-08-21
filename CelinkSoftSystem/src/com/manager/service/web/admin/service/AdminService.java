@@ -32,7 +32,7 @@ public interface AdminService {
 
 	void addMethodLog(long time, String string);
 
-	public ResultDto getVersions(SearchDto dto, int code);
+	public ResultDto getVersions(SearchDto dto, Map<String, Object> map);
 
 	public String deleteNode(int res_code);
 

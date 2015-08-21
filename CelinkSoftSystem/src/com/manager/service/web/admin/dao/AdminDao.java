@@ -22,7 +22,7 @@ public interface AdminDao {
 	List<Map<String, Object>> getResource();
 
 	List<Version> getVersions(Map<String, Object> params);
-	int getVersionCount(int code);
+	int getVersionCount(Map<String, Object> map);
 	int deleteVersions(int res_code);
 	int deleteResource(int res_code);
 	String getResourceName(int res_code);

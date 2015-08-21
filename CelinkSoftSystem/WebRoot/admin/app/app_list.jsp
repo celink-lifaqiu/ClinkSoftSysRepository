@@ -201,14 +201,14 @@ function reset(){
 }
 
 function searchVersions(){
-	var type = $('#type_').combobox('getValue');	
+	var type_ = $('#type_').combobox('getValue');	
 	var startTime = $('#startTime').datetimebox('getValue');	
 	var endTime = $('#endTime').datetimebox('getValue');	
 	var keyword_ = $('#keyword_').val();	
 	var versioncode_ = $('#versioncode_').val();		
 
 	$('#dg').datagrid('load', {
-			type : type,
+			type_ : type_,
 			startTime : startTime,
 			endTime : endTime,
 			keyword_ : keyword_,
@@ -228,9 +228,9 @@ function searchVersions(){
 		
 			类型: <select id="type_" class="easyui-combobox" panelHeight="auto"
 				style="width:100px">
-				<option value="-1">请选择</option>
-				<option value="0">定制版</option>
-				<option value="1">正式版</option>
+				<option value="">请选择</option>
+				<option value="0">正式版</option>
+				<option value="1">定制版</option>
 			</select> &nbsp;&nbsp;&nbsp;&nbsp;
 			
 			时间 从: <input id="startTime" class="easyui-datetimebox" style="width:150px"> 
@@ -260,8 +260,8 @@ function searchVersions(){
 					<tr>
 						<td>类型:</td>
 						<td><select class="easyui-combobox" name="type" style="width:200px">
-							<option value="0">定制版</option>
-							<option value="1">正式版</option>
+							<option value="0">正式版</option>
+							<option value="1">定制版</option>
 						</select></td>
 					</tr>
 
@@ -322,8 +322,8 @@ function searchVersions(){
 						<td>类型:</td>
 						<td><select class="easyui-combobox" name="type"
 							style="width:200px">
-								<option value="0">定制版</option>
-								<option value="1">正式版</option>
+								<option value="0">正式版</option>
+								<option value="1">定制版</option>
 						</select></td>
 					</tr>
 

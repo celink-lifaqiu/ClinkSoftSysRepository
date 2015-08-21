@@ -100,14 +100,12 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	@Override
-	public ResultDto getVersions(SearchDto dto, int code) {
-		Map<String, Object> params = new HashMap<String, Object>();
+	public ResultDto getVersions(SearchDto dto, Map<String, Object> map) {
 		ResultDto  resultDto = new ResultDto();
-		params.put("startNum", (dto.getPage()-1)*dto.getRows());
-		params.put("pageSize", dto.getRows());
-		params.put("code", code);
-		List<Version> list  = adminDao.getVersions(params);
-		int total = adminDao.getVersionCount(code);
+		map.put("startNum", (dto.getPage()-1)*dto.getRows());
+		map.put("pageSize", dto.getRows());
+		List<Version> list  = adminDao.getVersions(map);
+		int total = adminDao.getVersionCount(map);
 		resultDto.setRows(list);
 		resultDto.initResultDto(dto.getRows(), dto.getPage(), total);
 		return resultDto;
