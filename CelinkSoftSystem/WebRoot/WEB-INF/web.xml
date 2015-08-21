@@ -57,6 +57,10 @@
     <error-code>500</error-code>
     <location>/admin/login.jsp</location>
   </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/admin/NotFound.jsp</location>
+  </error-page>
   
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

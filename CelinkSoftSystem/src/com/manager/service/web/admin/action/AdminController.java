@@ -39,7 +39,7 @@ import com.wifiswitch.service.utils.JsonUtil;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	String download_url="http://192.168.4.160:8080/CelinkSoftSystem/admin/appFile/";
+	String download_url="http://192.168.4.183:8080/CelinkSoftSystem/admin/appFile/";
 	private final static Logger logger = Logger.getLogger(AdminController.class);
 	@Autowired
 	private AdminService adminService;	
@@ -383,7 +383,7 @@ public class AdminController {
 		appInfo.put("id", id);
 
 		String path = request.getSession().getServletContext().getRealPath("")
-				+ File.separator + "appFile";
+				+ File.separator + "admin" + File.separator + "appFile";
 		if (filedata != null && !filedata.isEmpty()) {
 			File targetFile = new File(path, fileName);
 			String saveDir = "appFile";
@@ -442,7 +442,7 @@ public class AdminController {
 		response.setContentType("application/octet-stream");  
 		String fileName=request.getParameter("fileName");
 		String downpath = download_url+fileName;
-		response.getWriter().write(JsonUtil.getJson(downpath));	
+		response.getWriter().write(downpath);	
 	}
 	
 }

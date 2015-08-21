@@ -30,7 +30,11 @@ $(function(){
 			loadMsg : '数据加载中请稍后……',
 			singleSelect : true,
 			pagination : true,
-			columns : [ [ {
+			columns : [ [ { 
+			field : 'ck', 
+			checkbox:true, 
+			width : 40 
+			},{
 				field : 'id',
 				title : '编号',
 				width : 50
@@ -58,6 +62,10 @@ $(function(){
 				field : 'updateDesc',
 				title : '更新说明',
 				width : 300
+			}, {
+				field : 'commitId',
+				title : 'commitId',
+				width : 200
 			} ] ],
 			toolbar : [ {
 				text : "编辑版本",
@@ -143,7 +151,11 @@ $(function(){
 			loadMsg : '数据加载中请稍后……',
 			singleSelect : true,
 			pagination : true,
-			columns : [ [ {
+			columns : [ [ { 
+			field : 'ck', 
+			checkbox:true, 
+			width : 40 
+			},{
 				field : 'id',
 				title : '编号',
 				width : 50
@@ -180,10 +192,20 @@ $(function(){
 				text : "下载版本",
 				iconCls : "icon-upload",
 				handler : function() {
-					$('#fm').form('clear');
 					var rows = $('#dg').datagrid('getSelected');
 					if (rows != null) {
-						alert('还没完成');
+					var id = rows["id"];
+					var fileName=rows["fileName"];
+						$.ajax({
+								type : "POST",
+								url : "downloadVersion.do",
+								data : "fileName="+fileName,
+								dataType : 'text',
+								success : function(url) {
+									alert(url);
+									window.location.href=url;						
+									}
+								});
 					} else {
 						$.messager.alert('提示', '请选择下载的版本', 'error');
 					}
@@ -296,8 +318,8 @@ function searchVersions(){
 					</tr>
 					<tr>
 						<td>CommitID:</td>
-						<td><input class="easyui-validatebox" id="CommitID"
-							class="text" name="CommitID" style="width: 200px"
+						<td><input class="easyui-validatebox" id="commitId"
+							class="text" name="commitId" style="width: 200px"
 							 />
 						</td>
 					</tr>
