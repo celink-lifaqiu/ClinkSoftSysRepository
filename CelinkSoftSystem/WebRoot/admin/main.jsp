@@ -12,7 +12,7 @@
 	<body>
 		<div style="margin: 5px 0;"></div>
 		<div class="easyui-layout" style="width: 100%; height: 95%;">
-			<div data-options="region:'north'" style="height: 75px;text-algin: center;" >
+			<div data-options="region:'north'" style="background-color: #D6DED6;height: 70px;text-algin: center;" >
 				<h2 align="center">南山版本管理系统 </h2>
 				<div style="width: 100%;">
 					<%
@@ -41,7 +41,7 @@
 			<div data-options="region:'west',split:true" title="菜单"
 				style="width: 200px;">
 				<div class="easyui-accordion" data-options="fit:true,border:false">
-					<div title="项目列表" style="padding: 10px;">
+					<div title="项目列表" style="padding: 10px;background-color: #B5E1B5;">
 						<ul id="tt">
 						</ul> 
 					</div>	
@@ -74,10 +74,6 @@
 				</div>
 			</div>
 		</div>
-
-<script type="text/javascript">
-
-</script>
 
 	</body>
 </html>
