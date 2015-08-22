@@ -130,7 +130,6 @@ $(function(){
  }
 
  downloadVersion = function(){
-	 alert('a');
 	 var rows = $('#dg').datagrid('getSelected');
 		if (rows != null) {
 		var id = rows["id"];
@@ -151,6 +150,7 @@ $(function(){
    }  
  
  save = function(){
+
 	 $.messager.progress(); 
 	 $('#fm').form('submit',{  
 		 url: "updateApp.do",  

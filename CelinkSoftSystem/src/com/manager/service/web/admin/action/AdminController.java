@@ -179,7 +179,6 @@ public class AdminController {
 	@RequestMapping("/app/getVersions")
 	public void searchApp(SearchDto dto,HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("aaaaaaaaaaaaaa");
 		
 		response.setCharacterEncoding("UTF-8");
 		try{
