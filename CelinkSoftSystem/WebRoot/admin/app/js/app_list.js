@@ -187,13 +187,8 @@ $(function(){
 			success: function(result){ 
 				$.messager.progress('close');
 			    $('#dag_upload').dialog('close');
-				if(result){
-				   $('#dg').datagrid('reload');
-				   alert("上传成功");
-				}else{
-				   alert("上传失败");
-				}
-				
+			    $('#dg').datagrid('reload');
+				alert(result);
 			}  
 		});  
 		    

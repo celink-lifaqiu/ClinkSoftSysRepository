@@ -310,7 +310,7 @@ public class AdminController {
 			@RequestParam(value = "installFile", required = false) MultipartFile filedata,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IllegalStateException, IOException {
-		int result=0;		
+		String result = "上传失败";		
 		response.setCharacterEncoding("UTF-8");								
 		if (filedata != null && !filedata.isEmpty()) {//没有文件不让上传
 			Map<String, Object> appInfo = new HashMap<String, Object>();
@@ -326,49 +326,49 @@ public class AdminController {
 				appInfo.put("fileName", fileName);
 			}
 			
-			
-			String versionCode = request.getParameter("versionCode");
-			String updateDesc = request.getParameter("updateDesc").toString();
-			String commitId = request.getParameter("commitId");
-			int res_code = Integer.parseInt(request.getSession()
-					.getAttribute("code").toString());
-			appInfo.put("type", type);
-			appInfo.put("fileName", fileName);
-			appInfo.put("versionCode", versionCode);
-			appInfo.put("updateDesc", updateDesc);
-			appInfo.put("commitId", commitId);
-			appInfo.put("res_code", res_code);
-			
-			String path = request.getSession().getServletContext().getRealPath("")
-					+ File.separator +"admin"+File.separator+ "appFile";
-			File file=new File(path);			
-	        if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
-	        	file.mkdirs();
-	        }
-			File targetFile = new File(path, fileName);
-			String saveDir = "appFile";
-			int size = Integer.parseInt((filedata.getSize() / 1024) + 1 + "");
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String createDate = df.format(new Date());
-			appInfo.put("createDate", createDate);
-			appInfo.put("size", size);
-			appInfo.put("saveDir", saveDir);
-			filedata.transferTo(targetFile);
-			result = adminService.uploadVersion(appInfo);
+			boolean flag = this.adminService.findFileNames(fileName);
+			if(flag){
+				result = "文件名已存在，上传失败";
+			}else{
+				String versionCode = request.getParameter("versionCode");
+				String updateDesc = request.getParameter("updateDesc").toString();
+				String commitId = request.getParameter("commitId");
+				int res_code = Integer.parseInt(request.getSession()
+						.getAttribute("code").toString());
+				appInfo.put("type", type);
+				appInfo.put("fileName", fileName);
+				appInfo.put("versionCode", versionCode);
+				appInfo.put("updateDesc", updateDesc);
+				appInfo.put("commitId", commitId);
+				appInfo.put("res_code", res_code);
+				
+				String path = request.getSession().getServletContext().getRealPath("")
+						+ File.separator +"admin"+File.separator+ "appFile";
+				File file=new File(path);			
+		        if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
+		        	file.mkdirs();
+		        }
+				File targetFile = new File(path, fileName);
+				String saveDir = "appFile";
+				int size = Integer.parseInt((filedata.getSize() / 1024) + 1 + "");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String createDate = df.format(new Date());
+				appInfo.put("createDate", createDate);
+				appInfo.put("size", size);
+				appInfo.put("saveDir", saveDir);
+				filedata.transferTo(targetFile);
+				if(adminService.uploadVersion(appInfo) > 0){
+					result = "上传成功";
+				}
+			}
 		}
 		 
 		try {
-			if (result > 0) {
-				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
-			} else {
-				response.getWriter().write(JsonUtil.getJson(Boolean.FALSE));
-			}
+			response.getWriter().write(result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("获取信息出错：" + e.getLocalizedMessage());
 		}
-		// request.getSession().removeAttribute("code");
 	}
 
 	@RequestMapping("/app/updateApp")

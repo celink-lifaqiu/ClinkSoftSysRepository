@@ -191,6 +191,17 @@ public class AdminServiceImpl implements AdminService {
 		params.put("res_name", res_code + "请重命名");
 		this.adminDao.updateResourceName(params);
 	}
+
+	@Override
+	public boolean findFileNames(String fileName) {
+
+		List<String> fileNames = this.adminDao.findFileNames(fileName);
+		if(fileNames != null && fileNames.size() > 0){
+			return true;
+		}
+		
+		return false;
+	}
 	
 	
 	

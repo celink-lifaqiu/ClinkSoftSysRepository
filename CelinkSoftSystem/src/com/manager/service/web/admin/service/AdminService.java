@@ -49,5 +49,7 @@ public interface AdminService {
 	void addProject();
 
 	void addProjectProduct(String pcode);
+
+	boolean findFileNames(String fileName);
 	
 }

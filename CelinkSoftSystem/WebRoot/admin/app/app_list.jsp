@@ -94,7 +94,7 @@
 						<td>类型:</td>
 						<td><select class="easyui-combobox" name="type"
 							style="width:200px">
-								<option value="0">正式版</option>
+								<option value="0" selected="selected">正式版</option>
 								<option value="1">定制版</option>
 						</select></td>
 					</tr>

@@ -33,4 +33,5 @@ public interface AdminDao {
 	int deleteVersion(int id);
 	int findRescodeByPnameAndRname(Map<String, Object> params);
 	int addResourceAndGetResCode(Resource resource);
+	List<String> findFileNames(String fileName);
 }

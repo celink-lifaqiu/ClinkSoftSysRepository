@@ -62,6 +62,9 @@
 	    order by createDate desc 
 	   	limit #{startNum},#{pageSize}
 	</select>
+	<select id="findFileNames" parameterType="String" resultType="String">
+	  select fileName from softversion_tb where fileName=#{_parameter}
+	</select>
 	<select id="getVersionCount" parameterType="Map" resultType="Integer">
 	  select count(id) from softversion_tb
 		<where>
