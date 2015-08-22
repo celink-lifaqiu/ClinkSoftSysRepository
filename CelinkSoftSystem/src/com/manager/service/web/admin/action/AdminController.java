@@ -360,6 +360,7 @@ public class AdminController {
 				if(adminService.uploadVersion(appInfo) > 0){
 					result = "上传成功";
 				}
+				
 			}
 		}
 		 

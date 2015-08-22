@@ -9,8 +9,16 @@
 	    INSERT INTO resource(res_name,res_status,parent_code,res_rank) VALUE(#{resName},#{resStatus},#{parentCode},#{resRank})
 	</insert> 
 
-   <select id="getResource" parameterType="Integer" resultType="Map">
+   <select id="getResource" resultType="Map">
        select * from resource
+   </select>
+
+   <select id="findResourceByRescode" parameterType="Integer" resultType="Map">
+       select * from resource WHERE res_code=#{_parameter}
+   </select>
+
+   <select id="findRescodesByparentcode" parameterType="Integer" resultType="Integer">
+       SELECT res_code from resource WHERE parent_code=#{_parameter}
    </select>
 
    <select id="getResourceName" parameterType="Integer" resultType="String">
@@ -28,8 +36,24 @@
    </delete>
    
    
+   <delete id="deleteVersionByRescodes" parameterType="Map">
+   	DELETE from softversion_tb WHERE res_code in
+		<foreach collection="rescodes" index="index" item="item" open="(" separator="," close=")">
+	        #{item}
+	   	</foreach>
+   </delete>
+   
+   
    <delete id="deleteResource" parameterType="int">
    	DELETE from resource WHERE res_code=#{_parameter}
+   </delete>
+   
+   
+   <delete id="deleteResources" parameterType="Map">
+   	DELETE from resource WHERE res_code in
+		<foreach collection="rescodes" index="index" item="item" open="(" separator="," close=")">
+	        #{item}
+	   	</foreach>
    </delete>
    
    <update id="updateResourceName" parameterType="Map">

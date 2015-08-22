@@ -114,13 +114,31 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String deleteNode(int res_code) {
 		String msg = "删除失败";
+		// 根据res_code找出资源，判断是一级还是二级
+		Map<String, Object> resource = this.adminDao.findResourceByRescode(res_code);
 		
-		int i = adminDao.deleteVersion(res_code);
-		
-		if(adminDao.deleteResource(res_code) > 0){
-			msg = "删除成功";
+		// 如果是二级，那么根据res_code删除表softversion_tb下的记录，在根据res_code删除表resource的记录
+		if(Integer.parseInt(resource.get("res_rank").toString())==2){
+			// 根据res_code删除表softversion_tb下的记录
+			adminDao.deleteVersions(res_code);
+			// 根据res_code删除表resource的记录
+			if(adminDao.deleteResource(res_code) > 0){
+				msg = "删除成功";
+			}
+		}else{
+			Map<String, Object> params = new HashMap<String, Object>();
+			// 如果是一级，先根据res_code查找出它的所有二级res_code
+			List<Integer> list = this.adminDao.findRescodesByparentcode(res_code);
+			// 把自己加入res_code
+			list.add(res_code);
+			params.put("rescodes", list);
+			// 在表softversion_tb下删除所有二级res_code的记录
+			adminDao.deleteVersionByRescodes(params);
+			// 在表resource中删除list的记录
+			if(adminDao.deleteResources(params) > 0){
+				msg = "删除成功";
+			}
 		}
-			
 		return msg;
 	}
 

@@ -2,12 +2,13 @@ $(function() {
 	$('#tt').tree({
 		url:'getmenu.do',
 		animate:true,
-		onContextMenu: function (e, title) {
+		onContextMenu: function (e, node) {
             e.preventDefault();
+            $(this).tree('select', node.target);
             $("#tmenu").menu('show', {
                 left: e.pageX,
                 top: e.pageY
-            }).data("tabTitle", title.text);
+            }).data("tabTitle", node.text);
         },
         onClick : function(node) {
 			if (node.attributes == undefined) {

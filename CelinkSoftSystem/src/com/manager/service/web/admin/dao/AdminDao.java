@@ -34,4 +34,8 @@ public interface AdminDao {
 	int findRescodeByPnameAndRname(Map<String, Object> params);
 	int addResourceAndGetResCode(Resource resource);
 	List<String> findFileNames(String fileName);
+	Map<String, Object> findResourceByRescode(int res_code);
+	List<Integer> findRescodesByparentcode(int res_code);
+	void deleteVersionByRescodes(Map<String, Object> params);
+	int deleteResources(Map<String, Object> params);
 }
