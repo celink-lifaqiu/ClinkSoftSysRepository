@@ -442,6 +442,7 @@ public class AdminController {
 			HttpServletResponse response) throws IllegalStateException,
 			IOException {
 		response.setContentType("application/octet-stream");  
+		response.setCharacterEncoding("UTF-8");
 		String fileName=request.getParameter("fileName");
 		String downpath = getPropertyByName("config.properties", "download.url")+fileName;
 		response.getWriter().write(downpath);	
