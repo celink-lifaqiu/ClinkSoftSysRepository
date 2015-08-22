@@ -316,6 +316,17 @@ public class AdminController {
 			Map<String, Object> appInfo = new HashMap<String, Object>();
 			String type = request.getParameter("type");
 			String fileName = request.getParameter("fileName");
+			
+			
+			String[] str = fileName.split("\\.");
+			if(str.length == 1){
+				String file = filedata.getOriginalFilename();
+				String[] strs = file.split("\\.");
+				fileName = fileName + "." + strs[strs.length-1];
+				appInfo.put("fileName", fileName);
+			}
+			
+			
 			String versionCode = request.getParameter("versionCode");
 			String updateDesc = request.getParameter("updateDesc").toString();
 			String commitId = request.getParameter("commitId");
@@ -387,6 +398,13 @@ public class AdminController {
 		String path = request.getSession().getServletContext().getRealPath("")
 				+ File.separator + "admin" + File.separator + "appFile";
 		if (filedata != null && !filedata.isEmpty()) {
+			String[] str = fileName.split("\\.");
+			if(str.length == 1){
+				String file = filedata.getOriginalFilename();
+				String[] strs = file.split("\\.");
+				fileName = fileName + "." + strs[strs.length-1];
+				appInfo.put("fileName", fileName);
+			}
 			File targetFile = new File(path, fileName);
 			String saveDir = "appFile";
 			int size = Integer.parseInt((filedata.getSize() / 1024) + 1 + "");
