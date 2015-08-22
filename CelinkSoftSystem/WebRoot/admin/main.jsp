@@ -29,7 +29,7 @@
 					<%
 					}else{
 					%>
-					游客：：<%=str %>&nbsp;&nbsp;<a href="#" onclick="loginOut()" style="text-decoration:none;font-size:16px;">注销</a>
+					游客：<%=str %>&nbsp;&nbsp;<a href="#" onclick="loginOut()" style="text-decoration:none;font-size:16px;">注销</a>
 					<%
 					}
 					%>
