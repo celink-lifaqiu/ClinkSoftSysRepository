@@ -84,6 +84,13 @@ $(function(){
 
 }
  
+ document.onkeydown = function (event) { 
+	 var e = event || window.event || arguments.callee.caller.arguments[0]; 
+	 if (e && e.keyCode == 13) { 
+	 searchVersions(); 
+	 } 
+	 };
+ 
  editVersion = function(){
 	 $('#fm').form('clear');
 		var rows = $('#dg').datagrid('getSelected');

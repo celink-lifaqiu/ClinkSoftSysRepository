@@ -10,7 +10,7 @@
 	</insert> 
 
    <select id="getResource" resultType="Map">
-       select * from resource
+       select * from resource order by res_rank,parent_code,res_name
    </select>
 
    <select id="findResourceByRescode" parameterType="Integer" resultType="Map">
