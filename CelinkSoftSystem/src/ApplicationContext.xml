@@ -38,7 +38,7 @@
 		<aop:advisor advice-ref="defaultTxAdvice" pointcut-ref="allServiceMethod" />
 	</aop:config>
 
-<!--  -->
+<!--  
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
 		destroy-method="close">
 		<property name="poolProperties">
@@ -68,9 +68,9 @@
 			</bean>
 		</property>
 	</bean>
+-->
 
-
-<!--  
+<!--  -->
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
 		destroy-method="close">
 		<property name="poolProperties">
@@ -100,7 +100,7 @@
 			</bean>
 		</property>
 	</bean>
--->
+
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
