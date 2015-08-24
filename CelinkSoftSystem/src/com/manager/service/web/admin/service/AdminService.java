@@ -46,7 +46,7 @@ public interface AdminService {
 
 	int findCodeByTitle(String title);
 
-	void addProject();
+	void addProject(String name);
 
 	void addProjectProduct(String pcode);
 

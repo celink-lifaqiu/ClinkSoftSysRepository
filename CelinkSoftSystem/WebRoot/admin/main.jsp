@@ -74,6 +74,15 @@
 				</div>
 			</div>
 		</div>
-
+		<div id="window" class="easyui-window" title="请输入项目名称" 
+		data-options="modal:true,closed:true,iconCls:'icon-save'" 
+		style="width:500px;height:200px;padding:10px;">
+		<div style="height:100px;padding:10px;"align='center'>
+		请输入项目名称：<br>
+				<input class="easyui-validatebox" id="projectName" name="projectName" type="text"
+									 data-options="required:true" />
+				<input id="btn" type="button" onclick="reName()" value="确定"/>	
+				</div>											
+		</div>	
 	</body>
 </html>

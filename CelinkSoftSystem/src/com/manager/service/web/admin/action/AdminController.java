@@ -278,8 +278,9 @@ public class AdminController {
 	public void addProject(HttpServletRequest request,
 			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
-		
-		this.adminService.addProject();
+		String proName=request.getParameter("proName");
+		System.out.println(proName);
+		this.adminService.addProject(proName);
 		
 		try {
 			response.getWriter().write("suc");
