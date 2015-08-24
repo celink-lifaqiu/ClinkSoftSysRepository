@@ -78,6 +78,12 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping("/visitor")
+	public void visitor(HttpServletRequest request,
+			HttpServletResponse r) throws IOException {
+		r.sendRedirect("visitor.jsp");
+	}
+	
 	@RequestMapping("/loginOut")
 	public void loginOut(HttpServletRequest request,
 			HttpServletResponse r) throws IOException, ServletException {
@@ -120,6 +126,32 @@ public class AdminController {
 			throw new Exception();
 		}
 	}
+	@RequestMapping("/getvisitormenu")
+	public void getvisitormenu(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setCharacterEncoding("UTF-8");
+		try {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			List<Resource> resources = adminService.getResource();
+			List<Resource> parent = new ArrayList<Resource>();
+			List<Resource> soon = new ArrayList<Resource>();
+			Resource r = null;
+			for (int i = 0; i < resources.size(); i++) {
+				r = resources.get(i);
+				if (r.getResRank() == 1) {
+					parent.add(r);
+				} else if (r.getResRank() == 2) {
+					soon.add(r);
+				}
+			}
+			String menu = null;
+			menu = concatVisitorMenu(parent, soon);
+			System.out.println(menu);
+			response.getWriter().write(menu);
+		} catch (Exception e) {
+			logger.info("获取菜单栏出错：" + e.getLocalizedMessage());
+			throw new Exception();
+		}
+	}
 
 	// 拼接左侧菜单
 	private String concatMenu(List<Resource> parent, List<Resource> soon) {
@@ -134,6 +166,27 @@ public class AdminController {
 			sb.append("\"code\":").append(r.getResCode()).append(",");
 			sb.append("\"isexpand\":false, \"children\":");
 			sb.append(getsubMenu(r, soon));
+			sb.append("}");
+			sb.append(",");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("]");
+		return sb.toString();
+	}
+	
+	// 拼接左侧菜单
+	private String concatVisitorMenu(List<Resource> parent, List<Resource> soon) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		Resource r = null;
+		for (int i = 0; i < parent.size(); i++) {
+			r = parent.get(i);
+			sb.append("{");
+			sb.append("\"text\":").append("\"").append(r.getResName()).append(
+					"\"").append(",");
+			sb.append("\"code\":").append(r.getResCode()).append(",");
+			sb.append("\"isexpand\":false, \"children\":");
+			sb.append(getvisitorsubMenu(r, soon));
 			sb.append("}");
 			sb.append(",");
 		}
@@ -157,13 +210,37 @@ public class AdminController {
 							"app/app_list.jsp").append("\"}").append("},");
 
 				}
-
 			}
 		}
 		if (sb.length() > 1) {
 			sb.deleteCharAt(sb.length() - 1);
 		}
 
+		sb.append("]");
+		return sb.toString();
+	}
+	
+	private String getvisitorsubMenu(Resource resource, List<Resource> list) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		Resource r = null;
+		if (list != null && list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				r = list.get(i);
+				if (resource.getResCode().equals(r.getParentCode())) {
+					sb.append("{\"text\":").append("\"").append(r.getResName())
+					.append("\"").append(",");
+					sb.append("\"code\":").append(r.getResCode()).append(",");
+					sb.append("\"attributes\":{\"url\":\"").append(
+							"app/products.jsp").append("\"}").append("},");
+					
+				}
+			}
+		}
+		if (sb.length() > 1) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		
 		sb.append("]");
 		return sb.toString();
 	}

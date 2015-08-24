@@ -137,7 +137,8 @@ body {
 					<tr>
 						<td></td>
 						<td><input type="submit" value="登录" accesskey="L"
-							class="loginbutton btn" />
+							class="loginbutton btn" />&nbsp;&nbsp;<input type="button" value="游客" accesskey="L"
+							class="loginbutton btn" onclick="visitor()"/>
 						</td>
 					</tr>
 				</table>
@@ -181,6 +182,10 @@ body {
 			} else {
 				delCookie("box_");
 			}
+		}
+
+		function visitor() {
+			window.location.href = "visitor.do";
 		}
 
 		function SetCookie(name, value)//两个参数，一个是cookie的名子，一个是值
