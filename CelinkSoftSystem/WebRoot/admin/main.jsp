@@ -10,11 +10,10 @@
 		<title>南山版本管理系统</title>
 	</head>
 	<body>
-		<div class="easyui-layout" style="width: 100%; height: 95%;">
-			<div data-options="region:'north'" style="background-color: #D6DED6;height: 95px;" >
-				<div  style="margin-top: 20px;height: 78px; width:200px;float:left;background: url('images/celink.png') no-repeat ;"></div>
-				<div  style="width: 80%;font-size:24px;text-align: center;">南山版本管理系统 </div>
-				<div style="width: 98%;text-align: right;font-size:16px;">
+		<div class="easyui-layout" style="width: 100%; height: 100%;">
+			<div data-options="region:'north'" style="background-color: #D6DED6;height: 70px;" >
+				<div  style="width: 100%;font-size:24px;text-align: center;float:right;">南山版本管理系统 </div>
+				<div style="width: 98%;float:right;font-size:16px;">
 					<%
 					Map<String, Object> user1 = (Map<String, Object>)session.getAttribute("user");
 					if(user1==null){
@@ -29,15 +28,13 @@
 					<%
 					}else{
 					%>
-					游客：<%=str %>&nbsp;&nbsp;<a href="#" onclick="loginOut()" style="text-decoration:none;font-size:16px;">注销</a>
+					游客：<%=str %>&nbsp;&nbsp;<a href="#" onclick="loginOut()" style="text-decoration:none;font-size:16px;">退出</a>
 					<%
 					}
 					%>
 					 
 				</div>
 			</div>
-			<div data-options="region:'south'" style="height: 50px;"></div>
-
 			<div data-options="region:'west',split:true" title="菜单"
 				style="width: 200px;">
 				<div class="easyui-accordion" data-options="fit:true,border:false">
