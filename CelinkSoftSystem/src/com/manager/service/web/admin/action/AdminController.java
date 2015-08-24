@@ -358,13 +358,10 @@ public class AdminController {
 			HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		String proName=request.getParameter("proName");
-		System.out.println(proName);
 		Map<String, Object> params=new HashMap<String, Object>();
 		params.put("parent_code", "");
 		params.put("res_name", proName);
 		String name=this.adminService.getprojectNamesByName(params);
-		//String result="";
-		System.out.println(name);
 		if (proName.equals(name)) {
 			response.getWriter().write("输入的项目名称已存在");
 		}else{
@@ -393,7 +390,7 @@ public class AdminController {
 		}else{
 			String path = request.getSession().getServletContext().getRealPath("")
 					+ File.separator +"admin"+File.separator+ "appFile";
-			this.adminService.addProjectProduct(pcode, proName,path);
+			this.adminService.addProjectProduct(pcode, proName, path);
 			response.getWriter().write("操作成功");
 		}
 		
@@ -487,7 +484,6 @@ public class AdminController {
 		int res_code = Integer.parseInt(request.getSession()
 				.getAttribute("code").toString());
 		appInfo.put("type", type);
-		appInfo.put("fileName", fileName);
 		appInfo.put("versionCode", versionCode);
 		appInfo.put("updateDesc", updateDesc);
 		appInfo.put("commitId", commitId);
@@ -525,13 +521,14 @@ public class AdminController {
 		}else{
 			String[] str = oldName.split("\\.");
 			fileName = fileName + "." + str[str.length-1];
+			appInfo.put("fileName", fileName);
 			if(!oldName.equals(fileName)){
 				String root = request.getSession().getServletContext().getRealPath("")
 						+ File.separator +"admin"+File.separator+ "appFile" +File.separator+pDir+File.separator+dir ;
 				
 				System.out.println(root);
-				File file = new File(root+oldName);
-				File newFile=new File(root+fileName);
+				File file = new File(root,oldName);
+				File newFile=new File(root,fileName);
 				file.renameTo(newFile);
 			}
 		}

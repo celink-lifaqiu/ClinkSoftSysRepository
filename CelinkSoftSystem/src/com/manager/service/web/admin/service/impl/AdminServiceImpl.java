@@ -238,7 +238,7 @@ public class AdminServiceImpl implements AdminService {
 		resource.setResDir(proName);
 		this.adminDao.addResource(resource);
 		String pName = this.adminDao.findPNameByPCode(Integer.parseInt(pcode));
-		File file=new File(dir + File.separator + proName+ File.separator + pName);			
+		File file=new File(dir + File.separator + pName+ File.separator + proName);			
         if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
         	file.mkdirs();
         }
