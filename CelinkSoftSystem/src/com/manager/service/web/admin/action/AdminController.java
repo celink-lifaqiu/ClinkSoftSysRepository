@@ -368,7 +368,9 @@ public class AdminController {
 		if (proName.equals(name)) {
 			response.getWriter().write("输入的项目名称已存在");
 		}else{
-			this.adminService.addProject(proName);
+			String path = request.getSession().getServletContext().getRealPath("")
+					+ File.separator +"admin"+File.separator+ "appFile";
+			this.adminService.addProject(proName,path);
 			response.getWriter().write("操作成功");
 		}
 				
@@ -386,11 +388,13 @@ public class AdminController {
 		params.put("res_name", proName);
 		String name=this.adminService.getprojectNamesByName(params);
 		//String result="";
-		if (name.equals(proName)) {
+		if (proName.equals(name)) {
 			response.getWriter().write("输入的产品名称已存在");
 		}else{
-		this.adminService.addProjectProduct(pcode, proName);
-		response.getWriter().write("操作成功");
+			String path = request.getSession().getServletContext().getRealPath("")
+					+ File.separator +"admin"+File.separator+ "appFile";
+			this.adminService.addProjectProduct(pcode, proName,path);
+			response.getWriter().write("操作成功");
 		}
 		
 	}
@@ -433,8 +437,11 @@ public class AdminController {
 				appInfo.put("commitId", commitId);
 				appInfo.put("res_code", res_code);
 				
+				String pDir = this.adminService.findDirByPCode(res_code);
+				String dir = this.adminService.findDirByCode(res_code);
+				
 				String path = request.getSession().getServletContext().getRealPath("")
-						+ File.separator +"admin"+File.separator+ "appFile";
+						+ File.separator +"admin"+File.separator+ "appFile"+File.separator+ pDir+File.separator+ dir;
 				File file=new File(path);			
 		        if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
 		        	file.mkdirs();
@@ -486,10 +493,13 @@ public class AdminController {
 		appInfo.put("commitId", commitId);
 		appInfo.put("res_code", res_code);
 		appInfo.put("id", id);
-
+		String pDir = this.adminService.findDirByPCode(res_code);
+		String dir = this.adminService.findDirByCode(res_code);
 		String path = request.getSession().getServletContext().getRealPath("")
-				+ File.separator + "admin" + File.separator + "appFile";
+				+ File.separator + "admin" + File.separator + "appFile"+File.separator+pDir+File.separator+dir ;
+		String oldName=adminService.findFileNamebyId(id);
 		if (filedata != null && !filedata.isEmpty()) {
+			
 			String[] str = fileName.split("\\.");
 			if(str.length == 1){
 				String file = filedata.getOriginalFilename();
@@ -498,27 +508,38 @@ public class AdminController {
 				appInfo.put("fileName", fileName);
 			}
 			File targetFile = new File(path, fileName);
-			String saveDir = "appFile";
 			int size = Integer.parseInt((filedata.getSize() / 1024) + 1 + "");
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String createDate = df.format(new Date());
 			appInfo.put("createDate", createDate);
 			appInfo.put("size", size);
-			appInfo.put("saveDir", saveDir);
+			appInfo.put("saveDir", File.separator + "admin" + File.separator + "appFile"+File.separator+pDir+File.separator+dir+File.separator);
 			filedata.transferTo(targetFile);
-		}
-		String oldName=adminService.findFileNamebyId(id);
-		System.out.println("22222223435re"+oldName);
-		int result = adminService.updateVersion(appInfo);
-
-		try {
-			if (result > 0) {
+			
+			
+			File oldFile = new File(path+oldName);
+			if(oldFile.exists()){
+				oldFile.delete();
+			}
+			
+		}else{
+			String[] str = oldName.split("\\.");
+			fileName = fileName + "." + str[str.length-1];
+			if(!oldName.equals(fileName)){
 				String root = request.getSession().getServletContext().getRealPath("")
-						+ File.separator +"admin"+File.separator+ "appFile" +File.separator ;
+						+ File.separator +"admin"+File.separator+ "appFile" +File.separator+pDir+File.separator+dir ;
+				
 				System.out.println(root);
 				File file = new File(root+oldName);
 				File newFile=new File(root+fileName);
 				file.renameTo(newFile);
+			}
+		}
+		
+		int result = adminService.updateVersion(appInfo);
+
+		try {
+			if (result > 0) {
 				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
 			} else {
 				response.getWriter().write(JsonUtil.getJson(Boolean.FALSE));
@@ -537,15 +558,25 @@ public class AdminController {
 			IOException {
 		response.setCharacterEncoding("UTF-8");		
 		int id = Integer.parseInt(request.getParameter("id"));
+		Integer res_code = this.adminService.findCodeById(id);
+		String pDir = this.adminService.findDirByPCode(res_code);
+		String dir = this.adminService.findDirByCode(res_code);
+		
 		int result = adminService.deleteVersion(id);
-
+		
 		try {
 			if (result > 0) {
 				String root = request.getSession().getServletContext().getRealPath("")
 						+ File.separator +"admin"+File.separator;
+				String temp = request.getSession().getServletContext().getRealPath("")
+						+ File.separator +"admin"+File.separator+"temp"+File.separator;
+				File f = new File(temp);
+				if(!f.exists()){
+					f.mkdir();
+				}
 				System.out.println(root);
-				File file = new File(root+"appFile"+File.separator+ request.getParameter("fileName").toString());
-				File moveFile=new File(root+"temp"+File.separator+ request.getParameter("fileName").toString());
+				File file = new File(root+"appFile"+File.separator+pDir+File.separator+dir+ request.getParameter("fileName").toString());
+				File moveFile=new File(temp+request.getParameter("fileName").toString());
 				//file.delete();
 				file.renameTo(moveFile);
 			//	file.delete();
@@ -565,7 +596,13 @@ public class AdminController {
 		response.setContentType("application/octet-stream");  
 		response.setCharacterEncoding("UTF-8");
 		String fileName=request.getParameter("fileName");
-		String downpath = getPropertyByName("config.properties", "download.url")+fileName;
+		String id=request.getParameter("id");
+		Integer res_code = this.adminService.findCodeById(Integer.parseInt(id));
+		String pDir = this.adminService.findDirByPCode(res_code);
+		String dir = this.adminService.findDirByCode(res_code);
+		
+		String downpath = getPropertyByName("config.properties", "download.url")+pDir+"/"+dir+"/"+fileName;
+		System.out.println(downpath);
 		response.getWriter().write(downpath);	
 	}
 	

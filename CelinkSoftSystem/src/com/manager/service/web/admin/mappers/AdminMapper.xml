@@ -5,8 +5,8 @@
        select role_code,real_name,user_email,user_phone from user where user_name =#{name} and user_pwd =#{pwd} and user_status =1
    </select>
    
-	<insert id="addResourceAndGetResCode" useGeneratedKeys="true" keyProperty="resCode" parameterType="resource">  
-	    INSERT INTO resource(res_name,res_status,parent_code,res_rank) VALUE(#{resName},#{resStatus},#{parentCode},#{resRank})
+	<insert id="addResource" parameterType="resource">  
+	    INSERT INTO resource(res_name,res_status,res_dir,parent_code,res_rank) VALUE(#{resName},#{resStatus},#{resDir},#{parentCode},#{resRank})
 	</insert> 
 
    <select id="getResource" resultType="Map">
@@ -15,6 +15,24 @@
 
    <select id="findResourceByRescode" parameterType="Integer" resultType="Map">
        select * from resource WHERE res_code=#{_parameter}
+   </select>
+
+   <select id="findPNameByPCode" parameterType="Integer" resultType="String">
+       select res_name from resource WHERE res_code=#{_parameter}
+   </select>
+
+   <select id="findDirByCode" parameterType="Integer" resultType="String">
+   		select res_dir from resource WHERE res_code=#{_parameter}
+       
+   </select>
+
+   <select id="findCodeById" parameterType="Integer" resultType="Integer">
+   		select res_code from softversion_tb WHERE id=#{_parameter}
+       
+   </select>
+
+   <select id="findDirByPCode" parameterType="Integer" resultType="String">
+       select p.res_dir from resource p WHERE p.res_code=(select r.parent_code from resource r where r.res_code=#{_parameter})
    </select>
 
    <select id="findRescodesByparentcode" parameterType="Integer" resultType="Integer">

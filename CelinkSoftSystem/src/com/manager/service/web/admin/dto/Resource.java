@@ -8,6 +8,7 @@ public class Resource {
 	private Integer resStatus; //状态
 	private Integer parentCode; //上级资源
 	private Integer resRank; //资源等级
+	private String resDir;
 	public Integer getResCode() {
 		return resCode;
 	}
@@ -51,10 +52,16 @@ public class Resource {
 		this.resRank = resRank;
 	}
 
+	public String getResDir() {
+		return resDir;
+	}
+	public void setResDir(String resDir) {
+		this.resDir = resDir;
+	}
 	@Override
 	public String toString() {
 		return "{\"parentCode\":\"" + parentCode + "\", \"resCode\":\""
-				+ resCode + "\", \"resDesc\":\"" + resDesc
+				+ resCode + "\", \"resDesc\":\"" + resDesc + "\", \"resDir\":\"" + resDir
 				+ "\", \"resName\":\"" + resName + "\", \"resRank\":\""
 				+ resRank + "\", \"resStatus\":\"" + resStatus
 				+ "\", \"resUrl\":\"" + resUrl + "\"}";

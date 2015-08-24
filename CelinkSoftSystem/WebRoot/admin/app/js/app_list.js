@@ -134,10 +134,11 @@ $(function(){
 		if (rows != null) {
 		var id = rows["id"];
 		var fileName=rows["fileName"];
+		var id=rows["id"];
 			$.ajax({
 					type : "POST",
 					url : "downloadVersion.do",
-					data : "fileName="+fileName,
+					data : "fileName="+fileName+"&id="+id,
 					dataType : 'text',
 					success : function(url) {
 						window.location.href=url;						
@@ -169,7 +170,12 @@ $(function(){
 		 }  
 	 });  
  }  
-	
+ document.onkeydown = function (event) { 
+	 var e = event || window.event || arguments.callee.caller.arguments[0]; 
+	 if (e && e.keyCode == 13) { 
+	 searchVersions(); 
+	 } 
+	 };
 	upload = function(){
 		
 	//	$.messager.progress(); 

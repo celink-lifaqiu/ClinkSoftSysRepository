@@ -211,32 +211,37 @@ public class AdminServiceImpl implements AdminService {
 		return this.adminDao.findRescodeByPnameAndRname(params);
 	}
 
+
 	@Override
-	public void addProject(String name) {
+	public void addProject(String name, String dir) {
 		Resource resource = new Resource();
 		resource.setResRank(1);
 		resource.setResStatus(0);
-		this.adminDao.addResourceAndGetResCode(resource);
-		int res_code = resource.getResCode();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("res_code", res_code);
-		params.put("res_name", name);
-		this.adminDao.updateResourceName(params);
+		resource.setResName(name);
+		resource.setResDir(name);
 		
+		this.adminDao.addResource(resource);
+		
+		File file=new File(dir + File.separator + name);			
+        if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
+        	file.mkdirs();
+        }
 	}
 
 	@Override
-	public void addProjectProduct(String pcode, String proName) {
+	public void addProjectProduct(String pcode, String proName, String dir) {
 		Resource resource = new Resource();
 		resource.setResRank(2);
 		resource.setParentCode(Integer.parseInt(pcode));
 		resource.setResStatus(0);
-		this.adminDao.addResourceAndGetResCode(resource);
-		int res_code = resource.getResCode();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("res_code", res_code);
-		params.put("res_name", proName);
-		this.adminDao.updateResourceName(params);
+		resource.setResName(proName);
+		resource.setResDir(proName);
+		this.adminDao.addResource(resource);
+		String pName = this.adminDao.findPNameByPCode(Integer.parseInt(pcode));
+		File file=new File(dir + File.separator + proName+ File.separator + pName);			
+        if(!file.exists()){//判断文件夹是否创建，没有创建则创建新文件夹
+        	file.mkdirs();
+        }
 	}
 
 	@Override
@@ -252,15 +257,28 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public String findFileNamebyId(int id) {
-		// TODO Auto-generated method stub
 		return adminDao.findFileNamebyId(id);
 	}
 
 	
 	@Override
 	public String getprojectNamesByName(Map<String, Object> params) {
-		// TODO Auto-generated method stub
 		return this.adminDao.getprojectNamesByName(params);
+	}
+
+	@Override
+	public String findDirByPCode(int res_code) {
+		return this.adminDao.findDirByPCode(res_code);
+	}
+
+	@Override
+	public String findDirByCode(int res_code) {
+		return this.adminDao.findDirByCode(res_code);
+	}
+
+	@Override
+	public Integer findCodeById(int res_code) {
+		return this.adminDao.findCodeById(res_code);
 	}
 	
 	

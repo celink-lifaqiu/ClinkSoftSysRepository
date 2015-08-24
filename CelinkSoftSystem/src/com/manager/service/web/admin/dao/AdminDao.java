@@ -32,7 +32,7 @@ public interface AdminDao {
 	int updateVersion(Map<String, Object> params);
 	int deleteVersion(int id);
 	int findRescodeByPnameAndRname(Map<String, Object> params);
-	int addResourceAndGetResCode(Resource resource);
+	int addResource(Resource resource);
 	List<String> findFileNames(String fileName);
 	Map<String, Object> findResourceByRescode(int res_code);
 	List<Integer> findRescodesByparentcode(int res_code);
@@ -41,4 +41,8 @@ public interface AdminDao {
 	String findFileNamebyId(int id);
 	List<String> getVersionNamesByRescode(int res_code);
 	String getprojectNamesByName(Map<String, Object> params);
+	String findPNameByPCode(int parseInt);
+	String findDirByPCode(int res_code);
+	String findDirByCode(int res_code);
+	Integer findCodeById(int res_code);
 }

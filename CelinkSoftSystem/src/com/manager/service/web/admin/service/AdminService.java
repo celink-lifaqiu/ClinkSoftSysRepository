@@ -48,13 +48,19 @@ public interface AdminService {
 
 	int findCodeByTitle(String title);
 
-	void addProject(String name);
+	void addProject(String name, String dir);
 
-	void addProjectProduct(String pcode, String proName);
+	void addProjectProduct(String pcode, String proName, String dir);
 
 	boolean findFileNames(String fileName);
 	
 	String findFileNamebyId(int id);
 	String getprojectNamesByName(Map<String, Object> params);
+
+	String findDirByPCode(int res_code);
+
+	String findDirByCode(int res_code);
+
+	Integer findCodeById(int parseInt);
 	
 }
