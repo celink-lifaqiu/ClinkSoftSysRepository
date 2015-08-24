@@ -30,8 +30,9 @@
 					<tr>
 						<td>类型:</td>
 						<td><select class="easyui-combobox" name="type" style="width:200px">
-							<option value="0">正式版</option>
-							<option value="1">定制版</option>
+							<option value="0">研发内侧</option>
+							<option value="1">正式发布</option>
+							<option value="2">用户定制</option>
 						</select></td>
 					</tr>
 
@@ -94,8 +95,9 @@
 						<td>类型:</td>
 						<td><select id="_type" class="easyui-combobox" name="type" required="true" 
 							style="width:200px">
-								<option value="0">正式版</option>
-								<option value="1">定制版</option>
+								<option value="0">研发内侧</option>
+								<option value="1">正式发布</option>
+								<option value="2">用户定制</option>
 						</select></td>
 					</tr>
 
@@ -145,17 +147,18 @@
 	<div id="tb" style="padding:5px;height: auto;">
 	<div>
 				类型: <select id="type_" class="easyui-combobox" panelHeight="auto" 
-					style="width:100px">
+					style="width:75px">
 					<option value="">请选择</option>
-					<option value="0">正式版</option>
-					<option value="1">定制版</option>
-				</select> &nbsp;&nbsp;&nbsp;&nbsp;
+					<option value="0">研发内侧</option>
+					<option value="1">正式发布</option>
+					<option value="2">用户定制</option>
+				</select> &nbsp;&nbsp;
 				
-				时间 从: <input id="startTime" class="easyui-datetimebox" style="width:150px"> 
-				到:<input id="endTime" class="easyui-datetimebox" style="width:150px">
-				<br><br> 
-				版本号：<input id="versioncode_" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:200px">
-				关键字： <input id="keyword_"  class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:200px"><br>
+				时间 从: <input id="startTime" class="easyui-datebox" style="width:90px"> 
+				到:<input id="endTime" class="easyui-datebox" style="width:90px">
+				&nbsp;&nbsp;
+				版本号：<input id="versioncode_" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:100px">&nbsp;&nbsp;
+				关键字： <input id="keyword_"  class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:100px"><br>
 				
 					<a href="javascript:void(0);"  id="btn-search" class="easyui-linkbutton" iconCls="icon-search" onclick="searchVersions()">查找</a> 
 					<a href="javascript:void(0);" id="btn-reset" class="easyui-linkbutton" iconCls="icon-cancel" onclick="reset()">重置</a>

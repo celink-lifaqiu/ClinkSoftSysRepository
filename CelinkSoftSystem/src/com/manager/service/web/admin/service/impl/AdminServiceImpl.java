@@ -197,7 +197,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void addProjectProduct(String pcode) {
+	public void addProjectProduct(String pcode, String proName) {
 		Resource resource = new Resource();
 		resource.setResRank(2);
 		resource.setParentCode(Integer.parseInt(pcode));
@@ -206,7 +206,7 @@ public class AdminServiceImpl implements AdminService {
 		int res_code = resource.getResCode();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("res_code", res_code);
-		params.put("res_name", res_code + "请重命名");
+		params.put("res_name", proName);
 		this.adminDao.updateResourceName(params);
 	}
 

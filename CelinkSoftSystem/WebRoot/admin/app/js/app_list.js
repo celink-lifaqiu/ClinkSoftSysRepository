@@ -15,6 +15,7 @@ $(function(){
 		},{
 			field : 'id',
 			title : '编号',
+			hidden : 'true',
 			width : 50
 		}, {
 			field : 'typeStr',
@@ -29,8 +30,8 @@ $(function(){
 			title : '版本号',
 			width : 80
 		}, {
-			field : 'size',
-			title : '大小_KB',
+			field : 'sizeStr',
+			title : '大小',
 			width : 80
 		}, {
 			field : 'createDate',
@@ -42,13 +43,12 @@ $(function(){
 			width : 300
 		}, {
 			field : 'commitId',
-			title : 'commitId',
+			title : 'Commit ID',
 			width : 200
 		} ] ],
 		
 		toolbar : "#tb"
 	});
-	
 
 
 

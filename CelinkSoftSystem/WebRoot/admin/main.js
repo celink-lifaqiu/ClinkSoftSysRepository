@@ -100,52 +100,60 @@ $(function() {
 	 var proName = document.getElementById("projectName").value;
 	// alert(proName);
 	 if(proName==null||proName==""){	
-		 alert(proName);
+		 alert("请输入项目名称");
 	 }else{
-		 alert(proName);
-	 $("#window").window('close');	 			
+	 $("#window_project").window('close');	 			
 		$.ajax({
 			type : "POST",
 			url : "addProject.do",
 			data : "proName="+proName,
 			dataType : 'text',
 			success : function(msg) {
-				$("#tt").tree("reload");
-			//	$("#window").window('open');
-			//	$.messager.alert('提示', '请重命名', 'info');		
+				$("#tt").tree("reload");	
 				$('#tt').tree('collapseAll');
 			}
 		});
 	 }
  }
  
+ function reName_(){
+	 // var proName=$("#projectName").value;
+	 var proName = document.getElementById("projectName_").value;
+	 // alert(proName);
+	 if(proName==null||proName==""){	
+		 alert("请输入产品名称");
+	 }else{
+		 $("#window_product").window('close');	 	
+		 var node = $('#tt').tree('getSelected');  
+			var pnode=$('#tt').tree('getParent',node.target);
+			if(pnode){
+				
+			}else{
+				$.ajax({
+					type : "POST",
+					url : "addProjectProduct.do",
+					data : "pcode=" + node.code + "&proName=" + proName,
+					dataType : 'text',
+					success : function(msg) {
+						$("#tt").tree("reload");
+						$('#tt').tree('collapseAll');
+					}
+				});
+				
+			}
+		
+	 }
+ }
+ 
  
 function addProject(){
-	$("#window").window('open');
+	$("#window_project").window('open');
 		
 }
 
 function addProjectProduct(){
+	$("#window_product").window('open');
 	
-	var node = $('#tt').tree('getSelected');  
-	var pnode=$('#tt').tree('getParent',node.target);
-	if(pnode){
-		
-	}else{
-		$.ajax({
-			type : "POST",
-			url : "addProjectProduct.do",
-			data : "pcode=" + node.code,
-			dataType : 'text',
-			success : function(msg) {
-				$("#tt").tree("reload");
-				
-				$.messager.alert('提示', '请重命名', 'info');	
-				$('#tt').tree('collapseAll');
-			}
-		});
-		
-	}
 	
 }
 

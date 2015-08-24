@@ -48,7 +48,7 @@ public interface AdminService {
 
 	void addProject(String name);
 
-	void addProjectProduct(String pcode);
+	void addProjectProduct(String pcode, String proName);
 
 	boolean findFileNames(String fileName);
 	

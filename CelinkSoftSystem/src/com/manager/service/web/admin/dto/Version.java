@@ -33,7 +33,23 @@ public class Version {
 	private int type;
 	
 	public String getTypeStr(){
-		return this.getType()==0?"正式版":"定制版";
+		String str = "未知";
+		switch (this.getType()) {
+		case 0:
+			str = "研发内侧";
+			break;
+		case 1:
+			str = "正式发布";
+			break;
+		case 2:
+			str = "用户定制";
+			break;
+
+		default:
+			break;
+		}
+		
+		return str;
 	}
 	
 	/**
@@ -75,6 +91,12 @@ public class Version {
 	public int getSize() {
 		return size;
 	}
+	
+	public String getSizeStr(){
+		String str = this.getSize() + " KB";
+		return str;
+	}
+	
 
 	public void setSize(int size) {
 		this.size = size;

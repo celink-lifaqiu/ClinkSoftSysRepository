@@ -3,7 +3,7 @@
 }
 body {
     font-family:helvetica,tahoma,verdana,sans-serif;
-    padding:20px;
+    padding:5px;
     font-size:13px;
     margin:0;
     background-color: #E9DEDE;
@@ -24,4 +24,35 @@ h2 {
 	height:16px;
 	margin-right:8px;
 	float:left;
+}
+#logo {
+    position: absolute;
+    left: 25px;
+    top: 5px;
+    padding:10px;
+    
+}
+h3{
+	font-size: 24px;
+	color: #FFF;
+}
+.user-info {
+    float: right;
+	margin: 0px 10px;
+	color: #FFF;
+	font-size: 16px;
+	padding: 10px;
+}
+#top {
+    background-color: #229DCD;
+    height: 41px;
+    overflow: hidden;
+}
+#a {
+    color: #06C;
+    text-decoration: none;
+}
+* {
+    padding: 0px;
+    margin: 0px;
 }

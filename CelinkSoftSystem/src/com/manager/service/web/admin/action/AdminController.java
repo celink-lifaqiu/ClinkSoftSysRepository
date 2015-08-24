@@ -295,7 +295,8 @@ public class AdminController {
 			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		String pcode = request.getParameter("pcode");
-		this.adminService.addProjectProduct(pcode);
+		String proName=request.getParameter("proName");
+		this.adminService.addProjectProduct(pcode, proName);
 		
 		try {
 			response.getWriter().write("suc");
