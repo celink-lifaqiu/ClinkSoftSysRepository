@@ -19,6 +19,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
@@ -286,7 +288,7 @@ public class AdminController {
 			msg = "id不能为空，删除失败。";
 		}else{
 			int res_code = Integer.parseInt(code);
-			msg = this.adminService.deleteNode(res_code);
+			msg = this.adminService.deleteNode(res_code,request);
 		}
 		
 		try {
@@ -353,34 +355,44 @@ public class AdminController {
 	
 	@RequestMapping("/addProject")
 	public void addProject(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		String proName=request.getParameter("proName");
 		System.out.println(proName);
-		this.adminService.addProject(proName);
-		
-		try {
-			response.getWriter().write("suc");
-		} catch (IOException e) {
-			
-			e.printStackTrace();
+		Map<String, Object> params=new HashMap<String, Object>();
+		params.put("parent_code", "");
+		params.put("res_name", proName);
+		String name=this.adminService.getprojectNamesByName(params);
+		//String result="";
+		System.out.println(name);
+		if (proName.equals(name)) {
+			response.getWriter().write("输入的项目名称已存在");
+		}else{
+			this.adminService.addProject(proName);
+			response.getWriter().write("操作成功");
 		}
+				
+		
 	}
 	
 	@RequestMapping("/addProjectProduct")
 	public void addProjectProduct(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws JsonGenerationException, JsonMappingException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		String pcode = request.getParameter("pcode");
 		String proName=request.getParameter("proName");
+		Map<String, Object> params=new HashMap<String, Object>();
+		params.put("parent_code", pcode);
+		params.put("res_name", proName);
+		String name=this.adminService.getprojectNamesByName(params);
+		//String result="";
+		if (name.equals(proName)) {
+			response.getWriter().write("输入的产品名称已存在");
+		}else{
 		this.adminService.addProjectProduct(pcode, proName);
-		
-		try {
-			response.getWriter().write("suc");
-		} catch (IOException e) {
-			
-			e.printStackTrace();
+		response.getWriter().write("操作成功");
 		}
+		
 	}
 	
 
@@ -495,10 +507,18 @@ public class AdminController {
 			appInfo.put("saveDir", saveDir);
 			filedata.transferTo(targetFile);
 		}
+		String oldName=adminService.findFileNamebyId(id);
+		System.out.println("22222223435re"+oldName);
 		int result = adminService.updateVersion(appInfo);
 
 		try {
 			if (result > 0) {
+				String root = request.getSession().getServletContext().getRealPath("")
+						+ File.separator +"admin"+File.separator+ "appFile" +File.separator ;
+				System.out.println(root);
+				File file = new File(root+oldName);
+				File newFile=new File(root+fileName);
+				file.renameTo(newFile);
 				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
 			} else {
 				response.getWriter().write(JsonUtil.getJson(Boolean.FALSE));
@@ -522,10 +542,13 @@ public class AdminController {
 		try {
 			if (result > 0) {
 				String root = request.getSession().getServletContext().getRealPath("")
-						+ File.separator +"admin"+File.separator+ "appFile" +File.separator+ request.getParameter("fileName").toString();
+						+ File.separator +"admin"+File.separator;
 				System.out.println(root);
-				File file = new File(root);
-				file.delete();
+				File file = new File(root+"appFile"+File.separator+ request.getParameter("fileName").toString());
+				File moveFile=new File(root+"temp"+File.separator+ request.getParameter("fileName").toString());
+				//file.delete();
+				file.renameTo(moveFile);
+			//	file.delete();
 				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
 			} else {
 				response.getWriter().write(JsonUtil.getJson(Boolean.FALSE));

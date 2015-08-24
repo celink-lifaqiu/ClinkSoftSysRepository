@@ -109,8 +109,11 @@ $(function() {
 			data : "proName="+proName,
 			dataType : 'text',
 			success : function(msg) {
-				$("#tt").tree("reload");	
+				alert(msg);
+					$("#tt").tree("reload");	
 				$('#tt').tree('collapseAll');
+				
+				
 			}
 		});
 	 }
@@ -135,8 +138,11 @@ $(function() {
 					data : "pcode=" + node.code + "&proName=" + proName,
 					dataType : 'text',
 					success : function(msg) {
-						$("#tt").tree("reload");
-						$('#tt').tree('collapseAll');
+						alert(msg);
+							$("#tt").tree("reload");	
+							$('#tt').tree('collapseAll');
+						
+						
 					}
 				});
 				

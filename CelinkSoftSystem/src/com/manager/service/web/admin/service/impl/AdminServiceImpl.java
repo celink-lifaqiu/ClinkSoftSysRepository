@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,13 +114,24 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public String deleteNode(int res_code) {
+	public String deleteNode(int res_code,HttpServletRequest request) {
 		String msg = "删除失败";
 		// 根据res_code找出资源，判断是一级还是二级
 		Map<String, Object> resource = this.adminDao.findResourceByRescode(res_code);
 		
 		// 如果是二级，那么根据res_code删除表softversion_tb下的记录，在根据res_code删除表resource的记录
 		if(Integer.parseInt(resource.get("res_rank").toString())==2){
+			List<String>nameList=adminDao.getVersionNamesByRescode(res_code);
+			System.out.println("二级&&&&&&&&&&&&"+nameList);
+			for (String name:nameList) {
+				String root = request.getSession().getServletContext().getRealPath("")
+						+ File.separator +"admin"+File.separator;
+				System.out.println(root);
+				File file = new File(root+"appFile"+File.separator+ name);
+				File moveFile=new File(root+"temp"+File.separator+ name);
+			//	file.delete();
+				file.renameTo(moveFile);
+			}
 			// 根据res_code删除表softversion_tb下的记录
 			adminDao.deleteVersions(res_code);
 			// 根据res_code删除表resource的记录
@@ -129,6 +142,22 @@ public class AdminServiceImpl implements AdminService {
 			Map<String, Object> params = new HashMap<String, Object>();
 			// 如果是一级，先根据res_code查找出它的所有二级res_code
 			List<Integer> list = this.adminDao.findRescodesByparentcode(res_code);
+			List<String>filenameLists=new ArrayList<String>();
+			System.out.println("一级&&&&&&&&&&&&"+list);
+			for(int code:list){
+				List<String>fileList=this.adminDao.getVersionNamesByRescode(code);
+				filenameLists.addAll(fileList);
+			}
+			System.out.println("一级&&&&&&&&&&&&"+filenameLists);
+			for (String name:filenameLists) {
+				String root = request.getSession().getServletContext().getRealPath("")
+						+ File.separator +"admin"+File.separator;
+				System.out.println(root);
+				File file = new File(root+"appFile"+File.separator+ name);
+				File moveFile=new File(root+"temp"+File.separator+ name);
+			//	file.delete();
+				file.renameTo(moveFile);
+			}
 			// 把自己加入res_code
 			list.add(res_code);
 			params.put("rescodes", list);
@@ -219,6 +248,19 @@ public class AdminServiceImpl implements AdminService {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public String findFileNamebyId(int id) {
+		// TODO Auto-generated method stub
+		return adminDao.findFileNamebyId(id);
+	}
+
+	
+	@Override
+	public String getprojectNamesByName(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return this.adminDao.getprojectNamesByName(params);
 	}
 	
 	

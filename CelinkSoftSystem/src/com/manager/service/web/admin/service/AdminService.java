@@ -3,6 +3,8 @@ package com.manager.service.web.admin.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.manager.service.web.admin.dto.Resource;
 import com.manager.service.web.admin.dto.ResultDto;
 import com.manager.service.web.admin.dto.SearchDto;
@@ -34,7 +36,7 @@ public interface AdminService {
 
 	public ResultDto getVersions(SearchDto dto, Map<String, Object> map);
 
-	public String deleteNode(int res_code);
+	public String deleteNode(int res_code,HttpServletRequest request);
 
 	String getResourceNameByRescode(int res_code);
 
@@ -51,5 +53,8 @@ public interface AdminService {
 	void addProjectProduct(String pcode, String proName);
 
 	boolean findFileNames(String fileName);
+	
+	String findFileNamebyId(int id);
+	String getprojectNamesByName(Map<String, Object> params);
 	
 }

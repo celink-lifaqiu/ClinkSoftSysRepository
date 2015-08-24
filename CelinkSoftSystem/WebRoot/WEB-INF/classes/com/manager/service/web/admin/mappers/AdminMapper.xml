@@ -89,6 +89,9 @@
 	<select id="findFileNames" parameterType="String" resultType="String">
 	  select fileName from softversion_tb where fileName=#{_parameter}
 	</select>
+	<select id="findFileNamebyId" parameterType="Integer" resultType="String">
+	  select fileName from softversion_tb where id=#{_parameter}
+	</select>
 	<select id="getVersionCount" parameterType="Map" resultType="Integer">
 	  select count(id) from softversion_tb
 		<where>
@@ -159,4 +162,16 @@
 	<delete id="deleteVersion" parameterType="int">
 		delete from softversion_tb where id=#{_parameter}
 	</delete>
+	<select id="getVersionNamesByRescode" parameterType="Integer" resultType="String">
+	  select fileName from softversion_tb where res_code=#{_parameter}
+	</select>
+	<select id="getprojectNamesByName" parameterType="Map" resultType="String">
+	  select res_name from resource 
+	  <where>
+	  			res_name=#{res_name}
+				<if test="parent_code != null and parent_code !=''">
+					and parent_code = #{parent_code}
+				</if>				
+				 </where>
+	</select>
 </mapper>

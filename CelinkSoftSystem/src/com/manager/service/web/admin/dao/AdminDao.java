@@ -38,4 +38,7 @@ public interface AdminDao {
 	List<Integer> findRescodesByparentcode(int res_code);
 	void deleteVersionByRescodes(Map<String, Object> params);
 	int deleteResources(Map<String, Object> params);
+	String findFileNamebyId(int id);
+	List<String> getVersionNamesByRescode(int res_code);
+	String getprojectNamesByName(Map<String, Object> params);
 }

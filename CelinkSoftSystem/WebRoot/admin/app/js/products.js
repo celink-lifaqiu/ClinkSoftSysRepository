@@ -84,50 +84,6 @@ $(function(){
 
 }
  
- editVersion = function(){
-	 $('#fm').form('clear');
-		var rows = $('#dg').datagrid('getSelected');
-		if (rows != null) {
-			$('#dag').dialog('open').dialog('setTitle', '编辑版本');
-			$('#fm').form('load', rows);
-		} else {
-			$.messager.alert('提示', '请选择要修改的版本', 'error');
-		}
- }
- 
- addVersion = function(){
-	 $('#fm_upload').form('clear');
-		$('#dag_upload').dialog('open').dialog('setTitle', '上传版本');
-		$('#fm_upload').form('load', rows);
- }
- 
- deleteVersion = function(){
-	 var rows = $('#dg').datagrid('getSelected');
-		
-		if (rows != null) {
-			var id = rows["id"];
-			var fileName=rows["fileName"];
-			if (window.confirm("确认删除?")) {
-				$.ajax({
-						type : "POST",
-						url : "deleteVersion.do",
-						data : "id=" + id+'&'+"fileName="+fileName,
-						dataType : 'text',
-						success : function(msg) {
-							if (msg) {
-								$('#dg').datagrid('reload');
-								alert("删除成功");
-							} else {
-								alert("删除失败");
-							}								
-						}
-					});
-			}
-			
-		} else {
-			$.messager.alert('提示', '请选择要删除的版本', 'error');
-		}
- }
 
  downloadVersion = function(){
 	 var rows = $('#dg').datagrid('getSelected');
@@ -148,50 +104,5 @@ $(function(){
 		}
    }  
  
- save = function(){
-
-	 $.messager.progress(); 
-	 $('#fm').form('submit',{  
-		 url: "updateApp.do",  
-		 onSubmit: function(){
-			 return $(this).form('validate');  
-		 },  
-		 success: function(result){ 
-			 $.messager.progress('close');
-			 $('#dag').dialog('close');
-			 if(result){
-				 $('#dg').datagrid('reload'); 
-				 alert("修改成功");
-			 }else{
-				 alert("修改失败");
-			 }
-			 
-		 }  
-	 });  
- }  
-	
-	upload = function(){
-		
-	//	$.messager.progress(); 
-		 var str = document.getElementById("installFile_upload").value;		 		
-		$('#fm_upload').form('submit',{  
-			url: "uploadApp.do",  
-			onSubmit: function(){	
-				if(str==null||str.length==0){
-					alert("请选择上传的文件");
-					return false;
-				}else{
-				return $(this).form('validate');
-				}
-			},  
-			success: function(result){ 
-				$.messager.progress('close');
-			    $('#dag_upload').dialog('close');
-			    $('#dg').datagrid('reload');
-				alert(result);
-			}  
-		});  
-		    
-   }
 	
 });
