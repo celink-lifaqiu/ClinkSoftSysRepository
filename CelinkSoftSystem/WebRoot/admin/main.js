@@ -94,20 +94,35 @@ $(function() {
         }
     });
 });
+
+ function reName(){
+	// var proName=$("#projectName").value;
+	 var proName = document.getElementById("projectName").value;
+	// alert(proName);
+	 if(proName==null||proName==""){	
+		 alert(proName);
+	 }else{
+		 alert(proName);
+	 $("#window").window('close');	 			
+		$.ajax({
+			type : "POST",
+			url : "addProject.do",
+			data : "proName="+proName,
+			dataType : 'text',
+			success : function(msg) {
+				$("#tt").tree("reload");
+			//	$("#window").window('open');
+			//	$.messager.alert('提示', '请重命名', 'info');		
+				$('#tt').tree('collapseAll');
+			}
+		});
+	 }
+ }
+ 
  
 function addProject(){
-	$.ajax({
-		type : "POST",
-		url : "addProject.do",
-		dataType : 'text',
-		success : function(msg) {
-			$("#tt").tree("reload");
-			
-			$.messager.alert('提示', '请重命名', 'info');		
-			$('#tt').tree('collapseAll');
-		}
-	});
-	
+	$("#window").window('open');
+		
 }
 
 function addProjectProduct(){
