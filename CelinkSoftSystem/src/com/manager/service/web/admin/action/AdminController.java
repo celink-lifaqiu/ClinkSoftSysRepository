@@ -314,7 +314,7 @@ public class AdminController {
 			if(res_name.equals(name.trim())){
 				msg = "不能和原来名称一样，修改失败。";
 			}else{
-				int i = this.adminService.updateResourceName(res_code, name);
+				int i = this.adminService.updateResourceName(res_code, name,request);
 				if(i > 0){
 					msg = "修改成功";
 				}else{

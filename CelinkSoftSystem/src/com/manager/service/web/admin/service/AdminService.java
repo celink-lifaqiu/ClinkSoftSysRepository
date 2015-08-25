@@ -40,7 +40,7 @@ public interface AdminService {
 
 	String getResourceNameByRescode(int res_code);
 
-	int updateResourceName(int res_code, String name);
+	int updateResourceName(int res_code, String name,HttpServletRequest request);
 	
 	public int uploadVersion(Map<String, Object> params);
 	public int updateVersion(Map<String, Object> params);

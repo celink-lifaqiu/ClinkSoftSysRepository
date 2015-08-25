@@ -178,10 +178,28 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int updateResourceName(int res_code, String name) {
+	public int updateResourceName(int res_code, String name,HttpServletRequest request) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("res_code", res_code);
 		params.put("res_name", name);
+		params.put("res_dir", name);
+		String dir=adminDao.findDirByCode(res_code);
+		Map<String, Object> resource = this.adminDao.findResourceByRescode(res_code);		
+		// 如果是二级，那么根据res_code删除表softversion_tb下的记录，在根据res_code删除表resource的记录
+		if(Integer.parseInt(resource.get("res_rank").toString())==2){		
+			String Pdir=adminDao.findDirByPCode(res_code);
+		String path = request.getSession().getServletContext().getRealPath("")
+				+ File.separator +"admin"+File.separator+ "appFile"+File.separator+Pdir+File.separator;
+		File oldFile =new File(path+dir);
+		File newFile=new File(path+name);
+		oldFile.renameTo(newFile);
+		}else {
+			String path = request.getSession().getServletContext().getRealPath("")
+					+ File.separator +"admin"+File.separator+ "appFile"+File.separator;
+			File oldFile =new File(path+dir);
+			File newFile=new File(path+name);
+			oldFile.renameTo(newFile);
+		}
 		return adminDao.updateResourceName(params);
 	}
 

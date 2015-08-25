@@ -75,7 +75,7 @@
    </delete>
    
    <update id="updateResourceName" parameterType="Map">
-   	UPDATE resource SET res_name=#{res_name}  WHERE res_code=#{res_code} 
+   UPDATE resource SET res_name=#{res_name} ,res_dir=#{res_dir}  WHERE res_code=#{res_code} 
    </update>
    
    <select id="getVersions" parameterType="Map" resultType="version">
