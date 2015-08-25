@@ -572,11 +572,13 @@ public class AdminController {
 					f.mkdir();
 				}
 				System.out.println(root);
-				File file = new File(root+"appFile"+File.separator+pDir+File.separator+dir+ request.getParameter("fileName").toString());
+				File file = new File(root+"appFile"+File.separator+pDir+File.separator+dir+File.separator+ request.getParameter("fileName").toString());
+				System.out.println("&&&&&&"+file);
 				File moveFile=new File(temp+request.getParameter("fileName").toString());
+				System.out.println("&&&&&&"+moveFile);
 				//file.delete();
 				file.renameTo(moveFile);
-			//	file.delete();
+				file.delete();
 				response.getWriter().write(JsonUtil.getJson(Boolean.TRUE));
 			} else {
 				response.getWriter().write(JsonUtil.getJson(Boolean.FALSE));
