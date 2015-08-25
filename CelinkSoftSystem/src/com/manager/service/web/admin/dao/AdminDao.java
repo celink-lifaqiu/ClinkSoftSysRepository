@@ -31,7 +31,7 @@ public interface AdminDao {
 	int uploadVersion(Map<String, Object> params);
 	int updateVersion(Map<String, Object> params);
 	int deleteVersion(int id);
-	int findRescodeByPnameAndRname(Map<String, Object> params);
+	Integer findRescodeByPnameAndRname(Map<String, Object> params);
 	int addResource(Resource resource);
 	List<String> findFileNames(String fileName);
 	Map<String, Object> findResourceByRescode(int res_code);
