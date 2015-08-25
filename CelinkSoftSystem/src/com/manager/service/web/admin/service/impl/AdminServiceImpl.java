@@ -226,7 +226,7 @@ public class AdminServiceImpl implements AdminService {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("p_name", str[0]);
 		params.put("r_name", str[1]);
-		return this.adminDao.findRescodeByPnameAndRname(params);
+		return this.adminDao.findRescodeByPnameAndRname(params)==null?0:this.adminDao.findRescodeByPnameAndRname(params);
 	}
 
 
